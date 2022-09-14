@@ -9,13 +9,20 @@ The libc4copper.so is the dynamic library referenced by *Copper* Java class libr
 
 ## How to use
 If you just want to use wiringPi library in Java environments, you can just simply copy the file libc4copper.so to the system library path.<br />
-        `sudo cp libc4copper.so /usr/lib`
+```
+sudo cp libc4copper.so /usr/lib
+```
 
 On 64-bit Pi, You can also compile the native functions with:<br />
-        `gcc -shared -I /usr/lib/jvm/java-17-openjdk-arm64/include -I /usr/lib/jvm/java-17-openjdk-arm64/include/linux  jwiringpi_JWiringPiInterfaceImpl.c -lwiringPi -lwiringPiDev -o libc4copper.so -Wall
-`
+```
+gcc -shared -I /usr/lib/jvm/java-17-openjdk-arm64/include \
+-I /usr/lib/jvm/java-17-openjdk-arm64/include/linux  \
+copper_InterfaceImpl.c -lwiringPi -lwiringPiDev -o libc4copper.so -Wall
+```
 
 And then cp libc4copper.so to the system library path.
 *   Note: if you don't want to copy the library to the /usr/lib, you can specify the library path before running your Java program, like:
-         `java -Djava.library.path=. YouProgram`
-         (this specify the . directory as the native library path.)
+```
+    java -Djava.library.path=. YouProgram
+```
+    (this specifies the . directory as the native library path.)
