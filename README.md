@@ -9,22 +9,32 @@ In addition, the source code (.java and .c) are provided to help users to unders
 ## How to use
 Unlike other Java wrappers for Pi's GPIO control, you can simply use this Java package in Raspbian operating system without complex settings. Just follow these 2 steps:
 
-1.  copy the file libc4jwiringpi.so to the system library path e.g. /usr/lib.<br />
-        `sudo cp libc4jwiringpi.so /usr/lib`
-2.  copy the directory jwringpi to your project.
-*   Note: if you don't want to copy the library to the /usr/lib, you can specify the library path before running your Java program, like:
-         `java -Djava.library.path=. YourProgram`
-         (this specify the . directory as the native library path.)
-## Methods jwiringpi provides
-You can invoke these methods by instantiating JWiringPiController
+1.  copy the file libc4copper.so to the system library path e.g. /usr/lib.
+```
+        sudo cp libc4copper.so /usr/lib
+```
+2.  copy the directory jwringpi to your project.<br>
+     TODO: include copper.jar in your class/jar path
 
-### Implements JWiringPiSetupInterface
-    int wiringPiSetup() ;
-    int wiringPiSetupGpio() ;
-    int wiringPiSetupPhys() ;
-    int wiringPiSetupSys() ;
+*   Note: If you don't want to copy the library to the /usr/lib, you can specify the library path before running your Java program, like:
+```
+         java -Djava.library.path=. YourProgram
+```
+(this specifies the . directory as the native library path.)
 
-### Implements JWiringPiCoreInterface
+## Methods Copper provides
+You can invoke these methods by instantiating *com.maehem.copper.pi.Controller*
+
+### Implements SetupInterface
+```java
+    int wiringPiSetup();
+    int wiringPiSetupGpio();
+    int wiringPiSetupPhys();
+    int wiringPiSetupSys();
+```
+
+### Implements CoreInterface
+```java
     void pinMode(int pin, int mode);
     void pullUpDnControl(int pin, int pud);
     void digitalWrite(int pin, int value);
@@ -32,18 +42,24 @@ You can invoke these methods by instantiating JWiringPiController
     int digitalRead(int pin);
     int analogRead(int pin);
     void analogWrite(int pin, int value);
+```
 
-### Implements JWiringPiTimingInterface
+### Implements TimingInterface
+```java
     int millis();
     int micros();
     void delay(int howLong);
     void delayMicroseconds(int howLong);
+```
 
-### Implements JWiringPiSPIInterface
+### Implements SPIInterface
+```java
     int wiringPiSPISetup(int channel, int speed);
     int wiringPiSPIDataRW(int channel, byte[] data, int len);
+```
 
-### Implements JWiringPiI2CInterface
+### Implements I2CInterface
+```java
     int wiringPiI2CSetup (int devId);
     int wiringPiI2CRead (int fd);
     int wiringPiI2CWrite (int fd, int data);
@@ -52,14 +68,16 @@ You can invoke these methods by instantiating JWiringPiController
     int wiringPiI2CWriteReg16 (int fd, int reg, int data);
     int wiringPiI2CReadReg8 (int fd, int reg);
     int wiringPiI2CReadReg16 (int fd, int reg);
+```
 
 ## Getting started
 A demo for getting started.
-1.  copy the file libc4jwiringpi.so to /usr/lib <br />
-        `sudo cp libc4jwiringpi.so /usr/lib`
+1.  copy the file libc4copper.so to /usr/lib <br />
+```sudo cp libc4copper.so /usr/lib```
 2.  save the following as RPiGPIODemo.java:
-<pre>
-import jwiringpi.*;
+
+```java
+import com.maehem.copper.pi.*;
 
 public class RPiGPIODemo {
     public static final int HIGH = 1;
@@ -81,15 +99,17 @@ public class RPiGPIODemo {
         }
     }
 }
-</pre>
-3.  copy the directory jwringpi to the directory of RPiGPIODemo.java
+```
+
+3.  copy the directory jwiringpi to the directory of RPiGPIODemo.java
 4.  compile the program with
         `javac RPiGPIODemo.java`
 5.  run the program
         `java RPiGPIODemo`
 6.  expected result: the voltage level of pin 25 will be toggled continuously.
 *   Note: the pins are named by WiringPi pin mapping. The pin25 in WiringPi is the pin37 in physical.
-<pre>
+
+```
 ## Pin mapping of Raspberry Pi 3 Model B
  +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
  | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
@@ -117,4 +137,4 @@ public class RPiGPIODemo {
  +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
  | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
  +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
-</pre>
+```
