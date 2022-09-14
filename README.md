@@ -1,13 +1,13 @@
-# jwiringpi
-Java implements for Raspberry Pi extension GPIO control (GPIO, SPI, I2C, PWM...), based on WiringPi library.
+# Copper: a derivative of [*jwiringpi*](https://github.com/soonuse/jwiringpi)
+Java native implementation for Raspberry Pi extension GPIO control (GPIO, SPI, I2C, PWM...), based on WiringPi library.
 
 ## Description
-The jwiringpi project is dedicated to creating an convenient and easy-to-use Java class library for Raspberry Pi extension GPIO control (GPIO, SPI, I2C, PWM...). In fact, this project provides a wrapper for WiringPi library. So in most cases, you can use it just like wiringPi library on Raspberry Pi. Fortunately, WiringPi library is preloaded in the latest Raspbian operating system, and there are no need to do any complex settings.
+The *Copper* project is dedicated to creating an convenient and easy-to-use Java class library for Raspberry Pi extension GPIO control (GPIO, SPI, I2C, PWM...). In fact, this project provides a wrapper for WiringPi library. So in most cases, you can use it just like wiringPi library on Raspberry Pi. Fortunately, WiringPi library is preloaded in the latest Raspbian operating system, and there are no need to do any complex settings.
 
 In addition, the source code (.java and .c) are provided to help users to understand the work of the Java native interface (JNI). You can also easily control the source on Pi by Java implement the corresponding interface or just control the source on Pi by Java.
 
 ## How to use
-Unlike other Java wrapper for Pi's GPIO control, you can simply use this Java package in Raspbian operating system without complex settings. Just follow these 2 steps:
+Unlike other Java wrappers for Pi's GPIO control, you can simply use this Java package in Raspbian operating system without complex settings. Just follow these 2 steps:
 
 1.  copy the file libc4jwiringpi.so to the system library path e.g. /usr/lib.<br />
         `sudo cp libc4jwiringpi.so /usr/lib`
@@ -17,6 +17,7 @@ Unlike other Java wrapper for Pi's GPIO control, you can simply use this Java pa
          (this specify the . directory as the native library path.)
 ## Methods jwiringpi provides
 You can invoke these methods by instantiating JWiringPiController
+
 ### Implements JWiringPiSetupInterface
     int wiringPiSetup() ;
     int wiringPiSetupGpio() ;
@@ -30,7 +31,7 @@ You can invoke these methods by instantiating JWiringPiController
     void pwmWrite(int pin, int value);
     int digitalRead(int pin);
     int analogRead(int pin);
-    void analogWrite(int pin, int value); 
+    void analogWrite(int pin, int value);
 
 ### Implements JWiringPiTimingInterface
     int millis();
@@ -51,6 +52,7 @@ You can invoke these methods by instantiating JWiringPiController
     int wiringPiI2CWriteReg16 (int fd, int reg, int data);
     int wiringPiI2CReadReg8 (int fd, int reg);
     int wiringPiI2CReadReg16 (int fd, int reg);
+
 ## Getting started
 A demo for getting started.
 1.  copy the file libc4jwiringpi.so to /usr/lib <br />
