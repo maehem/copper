@@ -1,12 +1,13 @@
 /**
-  * @filename       : jwiringpi_JWiringPiInterfaceImpl.c
+  * @filename       : copper_InterfaceImpl.c
   * @project        : JWiringPi
   * @date           : June 26 2017
   * @description:
   *      Java wrapper of Arduino like Wiring library for the Raspberry Pi.
   *      The implements are based on WiringPi library.
   *      WiringPi Library Copyright (c) 2012-2017 Gordon Henderson
-  *      JWiringPi project Copyright (c) 2017 soonuse from GitHub
+  *      JWiringPi project Copyright (c) 2017 @soonuse from GitHub
+  *      Copper project Copyright (c) 2022 @maehem from GitHub
   ***********************************************************************
   * This file is part of JWiringPi interface.
   *
@@ -33,195 +34,195 @@
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
 #include <wiringPiI2C.h>
-/* Implements for class jwiringpi_JWiringPiInterfaceImpl */
+/* Implements for class copper_InterfaceImpl */
 
-#ifndef _Included_jwiringpi_JWiringPiInterfaceImpl
-#define _Included_jwiringpi_JWiringPiInterfaceImpl
+#ifndef _Included_copper_InterfaceImpl
+#define _Included_copper_InterfaceImpl
 #ifdef __cplusplus
 extern "C" {
 #endif
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    wiringPiSetup
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiSetup
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_wiringPiSetup
   (JNIEnv *env, jobject obj) 
 {
     return wiringPiSetup();
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    wiringPiSetupGpio
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiSetupGpio
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_wiringPiSetupGpio
   (JNIEnv *env, jobject obj) 
 {
     return wiringPiSetupGpio();
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    wiringPiSetupPhys
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiSetupPhys
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_wiringPiSetupPhys
   (JNIEnv *env, jobject obj) 
 {
     return wiringPiSetupPhys();
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    wiringPiSetupSys
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiSetupSys
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_wiringPiSetupSys
   (JNIEnv *env, jobject obj) 
 {
     return wiringPiSetupSys();
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    pinMode
  * Signature: (II)V
  */
-JNIEXPORT void JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_pinMode
+JNIEXPORT void JNICALL Java_copper_InterfaceImpl_pinMode
   (JNIEnv *env, jobject obj, jint pin, jint mode) 
 {
     pinMode(pin, mode);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    pullUpDnControl
  * Signature: (II)V
  */
-JNIEXPORT void JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_pullUpDnControl
+JNIEXPORT void JNICALL Java_copper_InterfaceImpl_pullUpDnControl
   (JNIEnv *env, jobject obj, jint pin, jint pud) 
 {
     pullUpDnControl(pin, pud);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    digitalWrite
  * Signature: (II)V
  */
-JNIEXPORT void JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_digitalWrite
+JNIEXPORT void JNICALL Java_copper_InterfaceImpl_digitalWrite
   (JNIEnv *env, jobject obj, jint pin, jint value) 
 {
     digitalWrite(pin, value);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    pwmWrite
  * Signature: (II)V
  */
-JNIEXPORT void JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_pwmWrite
+JNIEXPORT void JNICALL Java_copper_InterfaceImpl_pwmWrite
   (JNIEnv *env, jobject obj, jint pin, jint value) 
 {
     pwmWrite(pin, value);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    digitalRead
  * Signature: (I)I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_digitalRead
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_digitalRead
   (JNIEnv *env, jobject obj, jint pin) 
 {
     return digitalRead(pin);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    analogRead
  * Signature: (I)I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_analogRead
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_analogRead
   (JNIEnv *env, jobject obj, jint pin) 
 {
     return analogRead(pin);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    analogWrite
  * Signature: (II)V
  */
-JNIEXPORT void JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_analogWrite
+JNIEXPORT void JNICALL Java_copper_InterfaceImpl_analogWrite
   (JNIEnv *env, jobject obj, jint pin, jint value) 
 {
     analogWrite(pin, value);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    millis
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_millis
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_millis
   (JNIEnv *env, jobject obj) 
 {
     return millis();
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    micros
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_micros
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_micros
   (JNIEnv *env, jobject obj) 
 {
     return micros();
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    delay
  * Signature: (I)V
  */
-JNIEXPORT void JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_delay
+JNIEXPORT void JNICALL Java_copper_InterfaceImpl_delay
   (JNIEnv *env, jobject obj, jint howLong) 
 {
     delay(howLong);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    delayMicroseconds
  * Signature: (I)V
  */
-JNIEXPORT void JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_delayMicroseconds
+JNIEXPORT void JNICALL Java_copper_InterfaceImpl_delayMicroseconds
   (JNIEnv *env, jobject obj, jint howLong) 
 {
     delayMicroseconds(howLong);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    wiringPiSPISetup
  * Signature: (II)I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiSPISetup
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_wiringPiSPISetup
   (JNIEnv *env, jobject obj, jint channel, jint speed) 
 {
     return wiringPiSPISetup (channel, speed);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    wiringPiSPIDataRW
  * Signature: (I[BI)I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiSPIDataRW
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_wiringPiSPIDataRW
   (JNIEnv *env, jobject obj, jint channel, jbyteArray data, jint length) 
 {
     int i;
@@ -251,44 +252,44 @@ JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiSPIDataRW
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    wiringPiI2CSetup
  * Signature: (I)I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiI2CSetup
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_wiringPiI2CSetup
   (JNIEnv *env, jobject obj, jint devId) 
 {
     return wiringPiI2CSetup(devId);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    wiringPiI2CRead
  * Signature: (I)I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiI2CRead
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_wiringPiI2CRead
   (JNIEnv *env, jobject obj, jint handle) 
 {
     return wiringPiI2CRead(handle);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    wiringPiI2CWrite
  * Signature: (II)I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiI2CWrite__II
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_wiringPiI2CWrite__II
   (JNIEnv *env, jobject obj, jint handle, jint data) 
 {
     return wiringPiI2CWrite(handle, data);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    wiringPiI2CWrite
  * Signature: (I[BI)I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiI2CWrite__I_3BI
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_wiringPiI2CWrite__I_3BI
   (JNIEnv *env, jobject obj, jint handle, jbyteArray data, jint length)
 {
     int i;
@@ -316,44 +317,44 @@ JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiI2CWrite__I
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    wiringPiI2CWriteReg8
  * Signature: (III)I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiI2CWriteReg8
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_wiringPiI2CWriteReg8
   (JNIEnv *env, jobject obj, jint handle, jint reg, jint data) 
 {
     return wiringPiI2CWriteReg8(handle, reg, data);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    wiringPiI2CWriteReg16
  * Signature: (III)I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiI2CWriteReg16
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_wiringPiI2CWriteReg16
   (JNIEnv *env, jobject obj, jint handle, jint reg, jint data) 
 {
     return wiringPiI2CWriteReg16(handle, reg, data);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    wiringPiI2CReadReg8
  * Signature: (II)I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiI2CReadReg8
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_wiringPiI2CReadReg8
   (JNIEnv *env, jobject obj, jint handle, jint reg) 
 {
     return wiringPiI2CReadReg8(handle, reg);
 }
 
 /*
- * Class:     jwiringpi_JWiringPiInterfaceImpl
+ * Class:     copper_InterfaceImpl
  * Method:    wiringPiI2CReadReg16
  * Signature: (II)I
  */
-JNIEXPORT jint JNICALL Java_jwiringpi_JWiringPiInterfaceImpl_wiringPiI2CReadReg16
+JNIEXPORT jint JNICALL Java_copper_InterfaceImpl_wiringPiI2CReadReg16
   (JNIEnv *env, jobject obj, jint handle, jint reg) 
 {
     return wiringPiI2CReadReg16(handle, reg);
