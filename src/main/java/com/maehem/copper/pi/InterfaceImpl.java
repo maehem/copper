@@ -42,10 +42,10 @@ public class InterfaceImpl implements
 {
 
     // Implements SetupInterface
-    public native int wiringPiSetup() ;
-    public native int wiringPiSetupGpio() ;
-    public native int wiringPiSetupPhys() ;
-    public native int wiringPiSetupSys() ;
+    public native int wiringPiSetup();
+    public native int wiringPiSetupGpio();
+    public native int wiringPiSetupPhys();
+    public native int wiringPiSetupSys();
 
     // Implements CoreInterface
     public native void pinMode(int pin, int mode);
