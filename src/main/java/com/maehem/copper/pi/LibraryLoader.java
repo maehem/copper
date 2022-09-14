@@ -31,7 +31,7 @@ package com.maehem.copper.pi;
 import java.io.File;
 
 /**
-  * @brief C library loader to load libc4jwiringpi.so
+  * @brief C library loader to load libc4copper.so
   */
 public class LibraryLoader {
     String[] libraryPath =
@@ -41,10 +41,10 @@ public class LibraryLoader {
         for (int i = 0; i < this.numberOfLibraryPath; i++) {
             if (new File(libraryPath[i] +
                 File.separator +
-                "libc4jwiringpi.so").exists()) {
-                // this loads the library libjavawiringpi.so, which equals
-                //System.load("/usr/lib/libjavawiringpi.so");
-                System.loadLibrary("c4jwiringpi");
+                "libc4copper.so").exists()) {
+                // this loads the library libc4copper.so, which equals
+                //System.load("/usr/lib/libc4copper.so");
+                System.loadLibrary("c4copper");
                 return true;
             } else {
                 if (i == numberOfLibraryPath - 1) {
