@@ -22,7 +22,7 @@ package com.maehem.copper.examples.raspberrypi.gpio;
   * along with wiringPi.  If not, see <http://www.gnu.org/licenses/>.
   ***********************************************************************
  */
-import com.maehem.copper.pi.Controller;
+import com.maehem.copper.pi.NativeController;
 
 public class RPiGPIODemo {
     public static final int HIGH = 1;
@@ -30,7 +30,7 @@ public class RPiGPIODemo {
     public static final int OUTPUT = 1;
 
     public static void main(String[] args) {
-        Controller gpio = new Controller();
+        NativeController gpio = new NativeController();
         if (gpio.wiringPiSetup() < 0) {
             System.out.println("WiringPi setup error");
             return;

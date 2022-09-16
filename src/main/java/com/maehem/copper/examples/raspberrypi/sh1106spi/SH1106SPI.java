@@ -20,13 +20,13 @@ package com.maehem.copper.examples.raspberrypi.sh1106spi;
   ***********************************************************************
  */
 
-import com.maehem.copper.pi.Controller;
+import com.maehem.copper.pi.NativeController;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
 
-public class SH1106SPI extends Controller {
+public class SH1106SPI extends NativeController {
     final public int OLED_WIDTH                                    = 128;
     final public int OLED_HEIGHT                                   = 64;
     final public int NUM_PAGES                                     = 8;
@@ -86,7 +86,7 @@ public class SH1106SPI extends Controller {
         int width, int height, boolean color) {
 
         int byteWidth = (width + 7) / 8;
-        int index = 0;
+        //int index = 0;
         for(int j = 0; j < OLED_HEIGHT; j++) {
             for(int i = 0; i < OLED_WIDTH; i ++) {
                 if((bmpBuffer[j * byteWidth + i / 8] & 0xFF & (128 >> (i & 7))) != 0) {
@@ -98,7 +98,7 @@ public class SH1106SPI extends Controller {
     public void showMonoBitmap(int x, int y, int[] bmpBuffer,
         int width, int height, boolean color) {
         int byteWidth = (width + 7) / 8;
-        int index = 0;
+        //int index = 0;
         for(int j = 0; j < OLED_HEIGHT; j++) {
             for(int i = 0; i < OLED_WIDTH; i ++) {
                 if((bmpBuffer[j * byteWidth + i / 8] & 0xFF & (128 >> (i & 7))) != 0) {
@@ -125,7 +125,7 @@ public class SH1106SPI extends Controller {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         display();

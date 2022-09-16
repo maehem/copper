@@ -20,13 +20,13 @@ package com.maehem.copper.examples.raspberrypi.ssd1306spi;
   ***********************************************************************
  */
 
-import com.maehem.copper.pi.Controller;
+import com.maehem.copper.pi.NativeController;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
 
-public class SSD1306SPI extends Controller {
+public class SSD1306SPI extends NativeController {
     final public int OLED_WIDTH                                    = 128;
     final public int OLED_HEIGHT                                   = 64;
     final public int NUM_PAGES                                     = 8;
@@ -112,7 +112,7 @@ public class SSD1306SPI extends Controller {
         int width, int height, boolean color) {
 
         int byteWidth = (width + 7) / 8;
-        int index = 0;
+        //int index = 0;
         for(int j = 0; j < OLED_HEIGHT; j++) {
             for(int i = 0; i < OLED_WIDTH; i ++) {
                 if((bmpBuffer[j * byteWidth + i / 8] & 0xFF & (128 >> (i & 7))) != 0) {
@@ -124,7 +124,7 @@ public class SSD1306SPI extends Controller {
     public void showMonoBitmap(int x, int y, int[] bmpBuffer,
         int width, int height, boolean color) {
         int byteWidth = (width + 7) / 8;
-        int index = 0;
+        //int index = 0;
         for(int j = 0; j < OLED_HEIGHT; j++) {
             for(int i = 0; i < OLED_WIDTH; i ++) {
                 if((bmpBuffer[j * byteWidth + i / 8] & 0xFF & (128 >> (i & 7))) != 0) {
@@ -151,7 +151,7 @@ public class SSD1306SPI extends Controller {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         display();
@@ -191,7 +191,7 @@ public class SSD1306SPI extends Controller {
         sendCommand(0x3F);
         sendCommand(SETDISPLAYOFFSET);
         sendCommand(0x0);                               // no offset
-        sendCommand(SETSTARTLINE | 0x0);        // line #0
+        sendCommand(SETSTARTLINE);                  // line #0
         sendCommand(CHARGEPUMP);
         sendCommand((VCCSTATE == EXTERNALVCC) ? 0x10 : 0x14);
         sendCommand(MEMORYMODE);

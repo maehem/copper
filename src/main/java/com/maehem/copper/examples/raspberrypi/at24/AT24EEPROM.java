@@ -20,10 +20,9 @@ package com.maehem.copper.examples.raspberrypi.at24;
   ***********************************************************************
  */
  
-import com.maehem.copper.pi.Controller;
-import java.io.*;
+import com.maehem.copper.pi.NativeController;
 
-public class AT24EEPROM extends Controller {
+public class AT24EEPROM extends NativeController {
     public static final int ADDR_AT24C04_FIRST_16_PAGES = 0x50;
     public static final int ADDR_AT24C04_LAST_16_PAGES = 0x51;
     public static final int AT24C04_PAGE_SIZE = 16;
@@ -41,10 +40,10 @@ public class AT24EEPROM extends Controller {
         this.fdLast16Pages = this.wiringPiI2CSetup(ADDR_AT24C04_LAST_16_PAGES);
     }
     public int writeAll(byte[] data) {
-        int memoryAddress = 0;
+        int memoryAddress;
         int page = 0;
         int dataIndex = 0;
-        int remain = data.length;
+        //int remain = data.length;
         int state;
         byte[] subBuffer = new byte[AT24C04_PAGE_SIZE + 1];
 

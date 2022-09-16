@@ -33,12 +33,7 @@ package com.maehem.copper.pi;
   * @brief this declares the native methods of JWiringPiInterfaces, in fact
   * they are implemented from the external C programs.
   */
-public class InterfaceImpl implements 
-    SetupInterface,
-    CoreInterface,
-    TimingInterface,
-    SPIInterface,
-    I2CInterface
+public class NativeControllerImpl extends Controller
 {
 
     // Implements SetupInterface

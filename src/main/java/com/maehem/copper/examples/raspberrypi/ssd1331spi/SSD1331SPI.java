@@ -20,13 +20,13 @@ package com.maehem.copper.examples.raspberrypi.ssd1331spi;
   ***********************************************************************
  */
 
-import com.maehem.copper.pi.Controller;
+import com.maehem.copper.pi.NativeController;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
 
-public class SSD1331SPI extends Controller {
+public class SSD1331SPI extends NativeController {
     final public int OLED_WIDTH                      = 96;
     final public int OLED_HEIGHT                     = 64;
     final public int RST_PIN                         = 24;
@@ -158,7 +158,7 @@ public class SSD1331SPI extends Controller {
         int width, int height, int color) {
 
         int byteWidth = (width + 7) / 8;
-        int index = 0;
+        //int index = 0;
         for(int j = 0; j < OLED_HEIGHT; j++) {
             for(int i = 0; i < OLED_WIDTH; i ++) {
                 if((bmpBuffer[j * byteWidth + i / 8] & 0xFF & (128 >> (i & 7))) != 0) {
@@ -171,7 +171,7 @@ public class SSD1331SPI extends Controller {
         int width, int height, int color) {
 
         int byteWidth = (width + 7) / 8;
-        int index = 0;
+        //int index = 0;
         for(int j = 0; j < OLED_HEIGHT; j++) {
             for(int i = 0; i < OLED_WIDTH; i ++) {
                 if((bmpBuffer[j * byteWidth + i / 8] & 0xFF & (128 >> (i & 7))) != 0) {
@@ -196,7 +196,7 @@ public class SSD1331SPI extends Controller {
                 }
             }
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         display();
