@@ -199,21 +199,17 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_getHardwar
  */
 JNIEXPORT jintArray JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_time
   (JNIEnv* env, jobject obj, jint type) {
-    jintArray result;
-    result = (*env).NewIntArray(env, jsize);
-    if (result == NULL) {
-        return NULL; /* out of memory error thrown */
-    }
 
-    jint vals[3];
+    int vals[3];
     int secs;
     int micros;
     vals[0] = gpioTime( type, &secs, &micros );
     vals[1] = secs;
     vals[2] = micros;
 
-    (*env).SetIntArrayRegion(env, result, 0, jsize, vals);
-    return result;
+    jintArray ret = env->NewIntArray(3);
+    env->SetIntArrayRegion(ret,0,3,vals);
+    return ret;
 }
 
 /*
