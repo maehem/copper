@@ -241,5 +241,3 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_tick
 #ifdef __cplusplus
 }
 #endif
-#endif
-
