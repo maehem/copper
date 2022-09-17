@@ -17,7 +17,7 @@ extern "C" {
  * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_initialise
-  (JNIEnv* env, jobject) {
+  (JNIEnv* env, jobject obj) {
     return gpioInitialise();
 }
 
@@ -27,8 +27,9 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_initialise
  * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_terminate
-  (JNIEnv* env, jobject) {
-    return gpioTerminate();
+  (JNIEnv* env, jobject obj) {
+    gpioTerminate();
+    return 0;
 }
 
 /*
@@ -58,7 +59,7 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_getMode
  */
 JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_setPullUpDown
   (JNIEnv* env, jobject obj, jint pin, jint pud) {
-    return gpioSetPullUpDown( pin, level );
+    return gpioSetPullUpDown( pin, pud );
 }
 
 /*
@@ -88,7 +89,7 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_write
  */
 JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_pwm
   (JNIEnv* env, jobject obj, jint pin, jint duty) {
-    return gpioPwm( pin, duty );
+    return gpioPWM( pin, duty );
 }
 
 /*
@@ -108,7 +109,7 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_pwmGetDuty
  */
 JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_pwmSetFrequency
   (JNIEnv* env, jobject obj, jint pin, jint freq) {
-    return gpioSetPWMfrequeny( pin, freq );
+    return gpioSetPWMfrequency( pin, freq );
 }
 
 /*
@@ -148,7 +149,7 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_pwmGetRang
  */
 JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_pwmGetRealRange
   (JNIEnv* env, jobject obj, jint pin) {
-    return gpioGetPWMrealrange( pin );
+    return gpioGetPWMrealRange( pin );
 }
 
 /*
@@ -197,11 +198,11 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_getHardwar
  * Signature: (I)[I
  */
 JNIEXPORT jintArray JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_time
-  (JNIEnv* env, jobject obj, jint pin) {
+  (JNIEnv* env, jobject obj, jint type) {
     int vals[3];
     int secs;
     int micros;
-    vals[0] = gpioTime( &secs, &micros );
+    vals[0] = gpioTime( type, &secs, &micros );
     vals[1] = secs;
     vals[2] = micros;
     return vals;
