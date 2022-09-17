@@ -4,8 +4,6 @@
  * To generate the .c and .h files run:
  *    javac -h . NativeControllerImpl.java
  * 
- *    compile on Pi:
- *    g++ -shared -fPIC -o libnative.so lib4copper.o -lc
  */
 package com.maehem.copper.pi;
 
