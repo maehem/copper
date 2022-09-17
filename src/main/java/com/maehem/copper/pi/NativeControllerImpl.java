@@ -435,13 +435,18 @@ sample
     
     /**
      * Updates the seconds and micros variables with the current time.
-     *
+     * <p>
      * If timetype is PI_TIME_ABSOLUTE updates seconds and micros with the number of seconds and microseconds since the epoch (1st January 1970)
+     * <br>
      * If timetype is PI_TIME_RELATIVE updates seconds and micros with the number of seconds and microseconds since the library was initialised.
-     *
+     * </p>
+     * <p>
      * Example:
      * The number of seconds and microseconds since the library was started
-     * int[] arr = gpio.time(PI_TIME_RELATIVE);
+     * <pre>{@code
+     *      int[] arr = gpio.time(PI_TIME_RELATIVE);
+     * }</pre>
+     * </p>
      * 
      * @param type 0 (relative), 1 (absolute)
      * @return int[ returnType, secs, micros ] -- returnType: 0 if OK, otherwise PI_BAD_TIMETYPE.
