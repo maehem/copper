@@ -33,7 +33,7 @@ package com.maehem.copper.pi;
   * @brief JWiringPiController extends JWiringPiInterfaceImpl
   *   any class extends this can implement the wiringPi functions.
   */
-public class NativeController extends NativeControllerImpl {
+public class NativeControllerOld extends NativeControllerImpl {
     public static boolean libraryExists;
 
 /**
@@ -43,7 +43,7 @@ public class NativeController extends NativeControllerImpl {
         libraryExists = new LibraryLoader().load();
     }
 
-    public NativeController() {
+    public NativeControllerOld() {
         super();
     }
 }

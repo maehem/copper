@@ -41,7 +41,7 @@ package com.maehem.copper.pi;
   * still need to call one of the wiringPi setup functions – just use 
   * wiringPiSetupSys() if you don’t need root access in your program.
   */
-public interface TimingInterface {
+public interface TimingInterfaceOld {
 
 /**
   * @brief:

@@ -37,7 +37,7 @@ package com.maehem.copper.pi;
   * support all functions – e.g. the PiFace is pre-configured for its fixed 
   * inputs and outputs, and the Raspberry Pi has no on-board analog hardware.
   */
-public interface CoreInterface {
+public interface CoreInterfaceOld {
 
     // Handy defines
     

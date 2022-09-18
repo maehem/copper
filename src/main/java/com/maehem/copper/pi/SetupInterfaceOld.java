@@ -37,7 +37,7 @@ package com.maehem.copper.pi;
   * experience symptoms from it simply not working to segfaults and
   * timing issues.
   */
-public interface SetupInterface {
+public interface SetupInterfaceOld {
 
 /**
   * @brief: 
