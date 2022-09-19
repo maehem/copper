@@ -271,7 +271,7 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_spiRead
   (JNIEnv *env, jobject obj, jint handle, jbyteArray buffer, jint count) {
     jbyte* b = env->GetByteArrayElements(buffer, NULL);
     int ret = spiRead( handle, (char *)b, count );
-    env->ReleaseByteArrayElements(env, buffer, b, 0);
+    env->ReleaseByteArrayElements( buffer, b, 0);
     return ret;
 }
 
@@ -285,8 +285,8 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_spiXfer
     jbyte* bTx = env->GetByteArrayElements( txBuf, NULL);
     jbyte* bRx = env->GetByteArrayElements( rxBuf, NULL);
     int ret = spiXfer( handle, (char *)bTx, (char *)bRx, count );
-    env->ReleaseByteArrayElements(env, txBuf, bTx, 0);
-    env->ReleaseByteArrayElements(env, rxBuf, bRx, 0);
+    env->ReleaseByteArrayElements( txBuf, bTx, 0);
+    env->ReleaseByteArrayElements( rxBuf, bRx, 0);
 
     return ret;
 }
@@ -400,7 +400,7 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cWriteBl
   (JNIEnv *env, jobject obj, jint handle, jint i2cReg, jbyteArray buffer, jint count) {
     jbyte* b = env->GetByteArrayElements( buffer, NULL);
     int ret = i2cWriteBlockData( handle, i2cReg, (char *)b, count );
-    env->ReleaseByteArrayElements(env, buffer, b, 0);
+    env->ReleaseByteArrayElements( buffer, b, 0);
 
     return ret;
 }
@@ -414,7 +414,7 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cReadBlo
   (JNIEnv *env, jobject obj, jint handle, jint i2cReg, jbyteArray buffer) {
     jbyte* b = env->GetByteArrayElements( buffer, NULL);
     int ret = i2cReadBlockData( handle, i2cReg, (char *)b );
-    env->ReleaseByteArrayElements(env, buffer, b, 0);
+    env->ReleaseByteArrayElements( buffer, b, 0);
 
     return ret;
 }
@@ -428,7 +428,7 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cBlockPr
   (JNIEnv *env, jobject obj, jint handle, jint i2cReg, jbyteArray buffer, jint count) {
     jbyte* b = env->GetByteArrayElements( buffer, NULL);
     int ret = i2cBlockProcessCall( handle, i2cReg, (char *)b, count );
-    env->ReleaseByteArrayElements(env, buffer, b, 0);
+    env->ReleaseByteArrayElements( buffer, b, 0);
 
     return ret;
 }
@@ -442,7 +442,7 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cReadI2C
   (JNIEnv *env, jobject obj, jint handle, jint i2cReg, jbyteArray buffer, jint count) {
     jbyte* b = env->GetByteArrayElements( buffer, NULL);
     int ret = i2cReadI2CBlockData( handle, i2cReg,  (char *)b, count );
-    env->ReleaseByteArrayElements(env, buffer, b, 0);
+    env->ReleaseByteArrayElements( buffer, b, 0);
 
     return ret;
 }
@@ -456,7 +456,7 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cWriteI2
   (JNIEnv *env, jobject obj, jint handle, jint i2cReg, jbyteArray buffer, jint count) {
     jbyte* b = env->GetByteArrayElements( buffer, NULL);
     int ret = i2cWriteI2CBlockData( handle, i2cReg, (char *)b, count );
-    env->ReleaseByteArrayElements(env, buffer, b, 0);
+    env->ReleaseByteArrayElements( buffer, b, 0);
 
     return ret;
 }
@@ -470,7 +470,7 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cReadDev
   (JNIEnv *env, jobject obj, jint handle, jbyteArray buffer, jint count) {
     jbyte* b = env->GetByteArrayElements( buffer, NULL);
     int ret = i2cReadDevice( handle, (char *)b, count );
-    env->ReleaseByteArrayElements(env, buffer, b, 0);
+    env->ReleaseByteArrayElements( buffer, b, 0);
 
     return ret;
 }
@@ -484,7 +484,7 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cWriteDe
   (JNIEnv *env, jobject obj, jint handle, jbyteArray buffer, jint count) {
     jbyte* b = env->GetByteArrayElements( buffer, NULL);
     int ret = i2cWriteDevice( handle, (char *)b, count );
-    env->ReleaseByteArrayElements(env, buffer, b, 0);
+    env->ReleaseByteArrayElements( buffer, b, 0);
 
     return ret;
 }
