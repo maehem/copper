@@ -1,77 +1,160 @@
-/**
-  * @filename       : JWiringPiSPIInterface.java
-  * @project        : JWiringPi
-  * @date           : June 26 2017
-  * @description:
-  *      Java wrapper of Arduino like Wiring library for the Raspberry Pi.
-  *      The implements are based on WiringPi library.
-  *      WiringPi Library Copyright (c) 2012-2017 Gordon Henderson
-  *      JWiringPi project Copyright (c) 2017 soonuse from GitHub
-  ***********************************************************************
-  * This file is part of JWiringPi interface.
-  *
-  * The purpose of JWiringPi project is to create a convenient IO control
-  * interface (containing the implements of class) for Raspberry Pi Java
-  * programming.
-  *
-  * JWiringPi is free software: you can redistribute it and/or modify
-  * it under the terms of the General Public License (GPL).
-  *
-  * JWiringPi is distributed in the hope that it will be useful,
-  * but WITHOUT ANY WARRANTY; without even the implied warranty of
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  * GNU Lesser General Public License for more details.
-  *
-  * You should have received a copy of the GNU Lesser General Public License
-  * along with wiringPi.  If not, see <http://www.gnu.org/licenses/>.
-  ***********************************************************************
+/*
+ * This is free and unencumbered software released into the public domain.
+ * Anyone is free to copy, modify, publish, use, compile, sell, or
+ * distribute this software, either in source code form or as a compiled
+ * binary, for any purpose, commercial or non-commercial, and by any
+ * means.
+ * In jurisdictions that recognize copyright laws, the author or authors
+ * of this software dedicate any and all copyright interest in the
+ * software to the public domain. We make this dedication for the benefit
+ * of the public at large and to the detriment of our heirs and
+ * successors. We intend this dedication to be an overt act of
+ * relinquishment in perpetuity of all present and future rights to this
+ * software under copyright law.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ * For more information, please refer to <http://unlicense.org/>
  */
-
 package com.maehem.copper.pi;
 
 /**
-  * @brief SPI Library
-  **********************************************************************
-  * WiringPi includes a library which can make it easier to use the Raspberry
-  * Pi’s on-board SPI interface.
-  * Before you can use SPI interface, you may need to use the gpio utility to
-  * load the SPI drivers into the kernel: 
-  *     gpio load spi
-  * If you need a buffer size of greater than 4KB, then you can specify the 
-  * size (in KB) on the command line: 
-  *     gpio load spi 100
-  * will allocate a 100KB buffer. (You should rarely need this though, the
-  * default is more than enough for most applications).
-  */
+ *
+ * Interface for SPI functions of PiGPIO
+ *
+ * @author Mark J Koch
+ */
 public interface SPIInterface {
 
-/**
-  * @brief:
-  *   This is the way to initialise a channel (The Pi has 2 channels; 0 and 1).
-  *   The speed parameter is an integer in the range 500,000 through 32,000,000
-  *   and represents the SPI clock speed in Hz.
-  *   The returned value is the Linux file-descriptor for the device, or -1
-  *   on error. If an error has happened, you may use the standard errno global
-  *   variable to see why.
-  * @param: int channel, int speed
-  * @retval: int
-  */
-    public int wiringPiSPISetup (int channel, int speed); 
+    /**
+     * This function returns a handle for the SPI device on the channel. Data
+     * will be transferred at baud bits per second. The flags may be used to
+     * modify the default behaviour of 4-wire operation, mode 0, active low chip
+     * select.
+     *
+     * <p>
+     * The Pi has two SPI peripherals: main and auxiliary.
+     * The main SPI has two chip selects (channels), the auxiliary has three.
+     * The auxiliary SPI is available on all models but the A and B.
+     * </p>
+     * <p>
+     * The GPIO used are given in the following table.
+     *
+     * <pre>
+     *             MISO   MOSI   SCLK  CE0   CE1   CE2 
+     * Main SPI      9     10     11    8      7     - 
+     * Aux SPI      19     20     21    18    17    16
+     *</pre>
+     *</p>
+     * 
+     * <p>
+     * spiFlags consists of the least significant 22 bits.
+     * <pre>
+     * 21 20 19 18 17 16 15 14 13 12 11 10  9  8  7  6  5  4  3  2  1  0 
+     *  b  b  b  b  b  b  R  T  n  n  n  n  W  A u2 u1 u0 p2 p1 p0  m  m
+     * </pre>
+     * <ul>
+     * <li>mm defines the SPI mode.
+     * <br>  Warning: modes 1 and 3 do not appear to work on the auxiliary SPI.
+     * <pre>
+     *   Mode POL PHA 
+     *     0   0   0 
+     *     1   0   1 
+     *     2   1   0 
+     *     3   1   1<pre>
+     * <li>px is 0 if CEx is active low (default) and 1 for active high.
+     * <li>ux is 0 if the CEx GPIO is reserved for SPI (default) and 1 otherwise.
+     * <li>A is 0 for the main SPI, 1 for the auxiliary SPI.
+     * <li>W is 0 if the device is not 3-wire, 1 if the device is 3-wire. Main 
+     *      SPI only.
+     * <li>nnnn defines the number of bytes (0-15) to write before switching the
+     * MOSI line to MISO to read data. This field is ignored if W is not set.
+     * Main SPI only.
+     *
+     * <li>T is 1 if the least significant bit is transmitted on MOSI first, the
+     * default (0) shifts the most significant bit out first. Auxiliary SPI
+     * only.
+     *
+     * <li>R is 1 if the least significant bit is received on MISO first, the
+     * default (0) receives the most significant bit first. Auxiliary SPI only.
+     *
+     * <li>bbbbbb defines the word size in bits (0-32). The default (0) sets 8 bits
+     * per word. Auxiliary SPI only.
+     *
+     * </ul></p>
+     * The spiRead, spiWrite, and spiXfer functions transfer data packed into 1,
+     * 2, or 4 bytes according to the word size in bits.<br>
+     *
+     * For bits 1-8 there will be one byte per word. For bits 9-16 there will be
+     * two bytes per word. For bits 17-32 there will be four bytes per word.<br>
+     *
+     * Multi-byte transfers are made in least significant byte first order.<br>
+     *
+     * E.g. to transfer 32 11-bit words buf should contain 64 bytes and count
+     * should be 64.<br>
+     *
+     * E.g. to transfer the 14 bit value 0x1ABC send the bytes 0xBC followed by
+     * 0x1A.<br>
+     *
+     * The other bits in flags should be set to zero.
+     *
+     *
+     * @param spiChan 0-1 (0-2 for the auxiliary SPI)
+     * @param baud 32K-125M (values above 30M are unlikely to work)
+     * @param spiFlags see javadoc above
+     * @return a handle (>=0) if OK, otherwise PI_BAD_SPI_CHANNEL,
+     *   PI_BAD_SPI_SPEED, PI_BAD_FLAGS, PI_NO_AUX_SPI, or PI_SPI_OPEN_FAILED.
+     */
+    public int spiOpen(int spiChan, int baud, int spiFlags);
 
-/**
-  * @brief:
-  *   This performs a simultaneous write/read transaction over the selected
-  *   SPI bus. Data that was in your buffer is overwritten by data returned
-  *   from the SPI bus.
-  *   That’s all there is in the helper library. It is possible to do simple
-  *   read and writes over the SPI bus using the standard read() and write()
-  *   system calls though – write() may be better to use for sending data to
-  *   chains of shift registers, or those LED strings where you send RGB
-  *   triplets of data. Devices such as A/D and D/A converters usually need
-  *   to perform a concurrent write/read transaction to work.
-  * @param: int channel, byte[] data, int len
-  * @retval: int
-  */
-    public int wiringPiSPIDataRW (int channel, byte[] data, int len);
+    /**
+     * Closes the SPI device identified by the handle.
+     *
+     * @param handle >=0, as returned by a call to spiOpen
+     * @return 0 if OK, otherwise PI_BAD_HANDLE.
+     */
+    public int spiClose(int handle);
+
+    /**
+     * Reads count bytes of data from the SPI device associated with the handle.
+     *
+     * handle: >=0, as returned by a call to spiOpen buf: an array to receive
+     * the read data bytes count: the number of bytes to read
+     *
+     * Returns the number of bytes transferred if OK, otherwise PI_BAD_HANDLE,
+     * PI_BAD_SPI_COUNT, or PI_SPI_XFER_FAILED. int spiWrite(unsigned handle,
+     * char *buf, unsigned count) This function writes count bytes of data from
+     * buf to the SPI device associated with the handle.
+     *
+     * handle: >=0, as returned by a call to spiOpen buf: the data bytes to
+     *
+     * @param handle >=0
+     * @param buf array to receive bytes into
+     * @param count the number of bytes to write
+     * @return the number of bytes transferred if OK, otherwise PI_BAD_HANDLE,
+     * PI_BAD_SPI_COUNT, or PI_SPI_XFER_FAILED.
+     */
+    public int spiRead(int handle, byte buf[], int count);
+
+    /**
+     * Transfers count bytes of data from txBuf to the SPI device associated
+     * with the handle. Simultaneously count bytes of data are read from the
+     * device and placed in rxBuf.
+     *
+     *
+     * Returns 
+     *
+     * @param handle >=0, as returned by a call to spiOpen 
+     * @param txBuf the data bytes to
+     * @param rxBuf the received data bytes 
+     * @param count the number of bytes to transfer
+     * @return the number of bytes transferred if OK, otherwise PI_BAD_HANDLE,
+     * PI_BAD_SPI_COUNT, or PI_SPI_XFER_FAILED.
+     */
+    public int spiXfer(int handle, byte[] txBuf, byte[] rxBuf, int count);
+
 }
-

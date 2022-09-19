@@ -26,12 +26,8 @@ package com.maehem.copper.pi;
  *
  * @author Mark J. Koch (GitHub @maehem)
  */
-public class ProxyController extends ControllerOld {
-    private String proxy;
-
-    public ProxyController(String proxy) {
-        this.proxy = proxy;
-    }
-    
-
-}
+public abstract class PiGPIOInterface implements 
+        EssentialInterface, BasicInterface, PWMInterface,
+        ServoInterface, UtilitiesInterface,
+        SPIInterface, I2CInterface
+{}

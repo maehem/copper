@@ -23,15 +23,53 @@
 package com.maehem.copper.pi;
 
 /**
- *
+ * Essential calls for PiGPIO
+ * 
  * @author Mark J. Koch (GitHub @maehem)
  */
-public class ProxyController extends ControllerOld {
-    private String proxy;
-
-    public ProxyController(String proxy) {
-        this.proxy = proxy;
-    }
+public interface EssentialInterface {
+    // ESSENTIAL	
+    /**
+     * Initialize the library
+     *
+     * <p>
+     * Must be called before using the other library functions with 
+     * the following exceptions:<br>
+     * <pre>
+     *      gpioCfg*
+     *      getVersion()
+     *      getHardwareRevision()</pre>
+     * </p>
+     * <p>
+     * Example:
+     * <pre>{@code
+     *      if (gpio.initialise() < 0 ) {
+     *          // pigpio initialisation failed.
+     *      } else {
+     *         // pigpio initialised okay.
+     *      }
+     *}</pre>
+     * </p>
+     *
+     * @return piGpio verion number if OK, otherwise PI_INIT_FAILED.
+     */
+    public int initialise();
     
-
+    /**
+     * Terminates the library.
+     * 
+     * <p>Call before program exit.
+     * This function resets the used DMA channels, releases memory, and 
+     * terminates any running threads.
+     * </p>
+     * <p>Example:
+     * <pre>{@code
+     *      gpio.terminate();
+     * }</pre>
+     * </p>
+     * 
+     * @return nothing
+     */
+    public int terminate();
+    
 }
