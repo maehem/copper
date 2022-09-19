@@ -183,6 +183,198 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_delay
 JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_tick
   (JNIEnv *, jobject);
 
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    spiOpen
+ * Signature: (III)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_spiOpen
+  (JNIEnv *, jobject, jint, jint, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    spiClose
+ * Signature: (I)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_spiClose
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    spiRead
+ * Signature: (I[BI)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_spiRead
+  (JNIEnv *, jobject, jint, jbyteArray, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    spiXfer
+ * Signature: (I[B[BI)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_spiXfer
+  (JNIEnv *, jobject, jint, jbyteArray, jbyteArray, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cOpen
+ * Signature: (III)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cOpen
+  (JNIEnv *, jobject, jint, jint, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cClose
+ * Signature: (I)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cClose
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cWriteQuick
+ * Signature: (II)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cWriteQuick
+  (JNIEnv *, jobject, jint, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cWriteByte
+ * Signature: (II)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cWriteByte
+  (JNIEnv *, jobject, jint, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cReadByte
+ * Signature: (I)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cReadByte
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cWriteByteData
+ * Signature: (III)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cWriteByteData
+  (JNIEnv *, jobject, jint, jint, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cWriteWordData
+ * Signature: (III)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cWriteWordData
+  (JNIEnv *, jobject, jint, jint, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cReadByteData
+ * Signature: (II)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cReadByteData
+  (JNIEnv *, jobject, jint, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cReadWordData
+ * Signature: (II)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cReadWordData
+  (JNIEnv *, jobject, jint, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cProcessCall
+ * Signature: (III)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cProcessCall
+  (JNIEnv *, jobject, jint, jint, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cWriteBlockData
+ * Signature: (II[BI)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cWriteBlockData
+  (JNIEnv *, jobject, jint, jint, jbyteArray, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cReadBlockData
+ * Signature: (II[B)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cReadBlockData
+  (JNIEnv *, jobject, jint, jint, jbyteArray);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cBlockProcessCall
+ * Signature: (II[BI)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cBlockProcessCall
+  (JNIEnv *, jobject, jint, jint, jbyteArray, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cReadI2CBlockData
+ * Signature: (II[BI)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cReadI2CBlockData
+  (JNIEnv *, jobject, jint, jint, jbyteArray, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cWriteI2CBlockData
+ * Signature: (II[BI)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cWriteI2CBlockData
+  (JNIEnv *, jobject, jint, jint, jbyteArray, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cReadDevice
+ * Signature: (I[BI)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cReadDevice
+  (JNIEnv *, jobject, jint, jbyteArray, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cWriteDevice
+ * Signature: (I[BI)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cWriteDevice
+  (JNIEnv *, jobject, jint, jbyteArray, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cSwitchCombined
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cSwitchCombined
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cSegments
+ * Signature: (I[Ljava/lang/Object;I)I
+ */
+//JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cSegments
+//  (JNIEnv *, jobject, jint, jobjectArray, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    i2cZip
+ * Signature: (I[BI[BI)I
+ */
+//JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_i2cZip
+//  (JNIEnv *, jobject, jint, jbyteArray, jint, jbyteArray, jint);
+
 #ifdef __cplusplus
 }
 #endif
