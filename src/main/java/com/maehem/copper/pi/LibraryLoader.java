@@ -42,8 +42,9 @@ public class LibraryLoader {
             if (new File(libraryPath[i] +
                 File.separator +
                 "libcopper.so").exists()) {
-                // this loads the library libc4copper.so, which equals
+                // this loads the library libcopper.so, which equals
                 //System.load("/usr/lib/libcopper.so");
+                System.loadLibrary("pigpio");
                 System.loadLibrary("copper");
                 return true;
             } else {
