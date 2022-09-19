@@ -1,23 +1,24 @@
 # GPIO demo
-This demo is written in Java and tested on Raspberry Pi 3 Model B.
+This demo is written in Java and tested on Bullseye with Raspberry Pi 3 Model B.
 
 ## How to use
 1.  Hardware connection: 
     Connect an LED between the pins GPIO.25 and GND.
 2.  copy the file jwiringpi-native/libc4jwiringpi.so to the system library path e.g. /usr/lib.<br />
-        `sudo cp libc4jwiringpi.so /usr/lib`
+        `sudo cp libcopper.so /usr/lib`
 3.  copy the directory jwiringpi to the directory (i.e. gpio) of this project.<br />
         `cp -rf jwiringpi gpio``
 4.  run with<br />
-        `java RPiGPIODemo`
+        `java GPIODemo`
 *   Note: if you don't want to copy the library to the /usr/lib, you can specify the library path before running your Java program, like:
-         `java -Djava.library.path=. RPiGPIODemo`
-         this specify the . directory as the native library (libc4jwiringpi.so) path.
+         `java -Djava.library.path=. GPIODemo`
+         this specify the . directory as the native library (libcopper.so) path.
+
 ## Expected result
 The LED state of pin 25 will be toggled continuously. Note: the pins are named by WiringPi pin mapping. The pin25 in WiringPi is the pin37 in physical.
 ## Raspberry Pi pin mapping
 <pre>
- +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
+ +-----+-----+---------+------+---+-Pi 3/4/Z/Z2--+------+---------+-----+-----+
  | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
  +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
  |     |     |    3.3v |      |   |  1 || 2  |   |      | 5v      |     |     |
