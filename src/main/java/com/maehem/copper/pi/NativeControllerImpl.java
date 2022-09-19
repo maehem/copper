@@ -13,6 +13,11 @@ package com.maehem.copper.pi;
  * @author Mark J Koch
  */
 public class NativeControllerImpl extends PiGPIOInterface {
+
+    public NativeControllerImpl() {
+        LibraryLoader l = new LibraryLoader();
+        l.load();
+    }
     
     @Override
     public native int initialise();
