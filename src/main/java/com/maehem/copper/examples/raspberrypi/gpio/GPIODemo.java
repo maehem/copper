@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 public class GPIODemo {
     public static final Logger logger = Logger.getLogger("Copper - PiGPIO Java Demo");
     
-    private static final int PIN = 25;
+    private static final int PIN = 21;
     private static final int DELAY = 1000000;
 
     public static void main(String[] args) {
