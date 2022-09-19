@@ -1,23 +1,36 @@
 # GPIO demo
-This demo is written in Java and tested on Bullseye with Raspberry Pi 3 Model B.
+This demo is written in Java 17 and tested on Bullseye with Raspberry Pi Zero 2W.
 
 ## How to use
-1.  Hardware connection: 
-    Connect an LED between the pins GPIO.25 and GND.
-2.  copy the file jwiringpi-native/libc4jwiringpi.so to the system library path e.g. /usr/lib.<br />
-        `sudo cp libcopper.so /usr/lib`
-3.  copy the directory jwiringpi to the directory (i.e. gpio) of this project.<br />
-        `cp -rf jwiringpi gpio``
-4.  run with<br />
-        `java GPIODemo`
+1.  Connect Hardware:
+    Connect an LED between the pins GPIO.21 (BCM#) and GND.</br>
+2.  Compile the native 'libcopper.so' file using instructions/script in src/native/raspberrypi
+3.  Using 'sudo' copy the file libcopper.so to the system library path e.g. /usr/lib.<br />
+```
+        sudo cp libcopper.so /usr/lib
+```
+4.  Compile this gitproject with:<br>
+```
+        mvn clean package
+```
+    You should now have a "target/copper-0.1-SNAPSHOT.jar".
+5.  run with (pigpio needs root access):<br />
+```
+sudo java -cp target/copper-0.1-SNAPSHOT.jar com.maehem.copper.examples.raspberrypi.gpio.GPIODemo
+
 *   Note: if you don't want to copy the library to the /usr/lib, you can specify the library path before running your Java program, like:
-         `java -Djava.library.path=. GPIODemo`
-         this specify the . directory as the native library (libcopper.so) path.
+```         
+    sudo java -Djava.library.path=. GPIODemo
+```
+    This specifies the '.' directory as the native library (libcopper.so) path.
 
 ## Expected result
-The LED state of pin 25 will be toggled continuously. Note: the pins are named by WiringPi pin mapping. The pin25 in WiringPi is the pin37 in physical.
-## Raspberry Pi pin mapping
-<pre>
+The LED state of pin 21 will be toggled continuously.<br>
+
+Note: the pins are named by BCM pin mapping. The pin 21 in BCM is the pin 40 in physical.
+## Raspberry Pi Pin Mapping
+
+```
  +-----+-----+---------+------+---+-Pi 3/4/Z/Z2--+------+---------+-----+-----+
  | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
  +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
@@ -43,5 +56,5 @@ The LED state of pin 25 will be toggled continuously. Note: the pins are named b
  |     |     |      0v |      |   | 39 || 40 | 0 | IN   | GPIO.29 | 29  | 21  |
  +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
  | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
- +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
-</pre>
+ +-----+-----+---------+------+---+----------+---+------+---------+-----+-----+
+```
