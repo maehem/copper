@@ -16,7 +16,9 @@ public class NativeControllerImpl extends PiGPIOInterface {
 
     public NativeControllerImpl() {
         LibraryLoader l = new LibraryLoader();
-        l.load();
+        if ( !l.load() ){
+            System.out.println("Couldn't load libcopper.so!");
+        }
     }
     
     @Override
