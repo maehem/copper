@@ -20,13 +20,13 @@ package com.maehem.copper.examples.raspberrypi.sh1106spi;
   ***********************************************************************
  */
 
-import com.maehem.copper.pi.NativeController;
+import com.maehem.copper.pi.NativeControllerOld;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
 
-public class SH1106SPI extends NativeController {
+public class SH1106SPI extends NativeControllerOld {
     final public int OLED_WIDTH                                    = 128;
     final public int OLED_HEIGHT                                   = 64;
     final public int NUM_PAGES                                     = 8;
@@ -34,7 +34,7 @@ public class SH1106SPI extends NativeController {
     final public int DC_PIN                                        = 27;
     final public int CHANNEL                                       = 0;
     
-    // 1 byte = 8 pixles
+    // 1 byte = 8 pixels
     public byte frameBuffer[] = new byte[OLED_WIDTH * OLED_HEIGHT / 8];
 
     private void display() {
@@ -53,8 +53,9 @@ public class SH1106SPI extends NativeController {
             // set high column address 
             sendCommand(0x10); 
             // write data 
-            digitalWrite(DC_PIN, HIGH);
-            wiringPiSPIDataRW(CHANNEL, pageBuffer, pageBuffer.length); 
+//            write(DC_PIN, HIGH);
+// Uncomment when SPI working
+//            wiringPiSPIDataRW(CHANNEL, pageBuffer, pageBuffer.length); 
         }
     }
 
@@ -143,21 +144,23 @@ public class SH1106SPI extends NativeController {
     }
 
     public void sendCommand(int command) {
-        byte[] commands = {(byte)(command & 0xFF)};
-        digitalWrite(DC_PIN, LOW);
-        wiringPiSPIDataRW(CHANNEL, commands, 1);
+// Uncomment when SPI working
+//        byte[] commands = {(byte)(command & 0xFF)};
+//        digitalWrite(DC_PIN, LOW);
+//        wiringPiSPIDataRW(CHANNEL, commands, 1);
     }
 
     public void begin() {
-        pinMode(RST_PIN, OUTPUT);
-        pinMode(DC_PIN, OUTPUT);
-        wiringPiSPISetup(CHANNEL, 2000000);    //2M
-        
-        digitalWrite(RST_PIN,HIGH);
-        delay(10);
-        digitalWrite(RST_PIN,LOW);
-        delay(10);
-        digitalWrite(RST_PIN,HIGH);
+// Uncomment when SPI working
+//        pinMode(RST_PIN, OUTPUT);
+//        pinMode(DC_PIN, OUTPUT);
+//        wiringPiSPISetup(CHANNEL, 2000000);    //2M
+//        
+//        digitalWrite(RST_PIN,HIGH);
+//        delay(10);
+//        digitalWrite(RST_PIN,LOW);
+//        delay(10);
+//        digitalWrite(RST_PIN,HIGH);
 
         sendCommand(0xAE);//--turn off oled panel
         sendCommand(0x02);//---set low column address

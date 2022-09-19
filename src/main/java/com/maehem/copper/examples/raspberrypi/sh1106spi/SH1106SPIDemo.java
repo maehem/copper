@@ -30,12 +30,13 @@ import java.io.*;
 public class SH1106SPIDemo {
     public static void main(String[] args) {
         SH1106SPI oled = new SH1106SPI();
-        if (oled.wiringPiSetup() < 0) {
+        if (oled.initialise()< 0) {
             System.out.println("WiringPi setup error");
             return;
         }
         oled.begin();
-        oled.pinMode(oled.RST_PIN, oled.OUTPUT);
+// Uncomment when SPI working
+//        oled.mode(oled.RST_PIN, oled.OUTPUT);
 
         oled.clearFrameBuffer();
         oled.showImage(0, 0, new File("waveshare_logo.bmp"));

@@ -20,13 +20,13 @@ package com.maehem.copper.examples.raspberrypi.ssd1331spi;
   ***********************************************************************
  */
 
-import com.maehem.copper.pi.NativeController;
+import com.maehem.copper.pi.NativeControllerOld;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
 
-public class SSD1331SPI extends NativeController {
+public class SSD1331SPI extends NativeControllerOld {
     final public int OLED_WIDTH                      = 96;
     final public int OLED_HEIGHT                     = 64;
     final public int RST_PIN                         = 24;
@@ -114,20 +114,23 @@ public class SSD1331SPI extends NativeController {
         sendCommand(SET_ROW_ADDRESS);
         sendCommand(0);         //page atart address
         sendCommand(OLED_HEIGHT - 1); //page end address
-        digitalWrite(DC_PIN, HIGH);
+// Uncomment when SPI working
+//        digitalWrite(DC_PIN, HIGH);
         while (remain > subBufferLength) {
             for (int i = 0; i < subBufferLength; i++) {
                 subBuffer[i] = frameBuffer[index];
                 index++;
             }
-            wiringPiSPIDataRW(CHANNEL, subBuffer, subBufferLength);
+// Uncomment when SPI working
+//            wiringPiSPIDataRW(CHANNEL, subBuffer, subBufferLength);
             remain -= subBufferLength;
         }
         for (int i = 0; i < subBufferLength; i++) {
             subBuffer[i] = frameBuffer[index];
             index++;
         }
-        wiringPiSPIDataRW(CHANNEL, subBuffer, remain);
+// Uncomment when SPI working
+//        wiringPiSPIDataRW(CHANNEL, subBuffer, remain);
     }
 
     public void showString(String string, int x, int y, Font font, int color) {
@@ -212,20 +215,22 @@ public class SSD1331SPI extends NativeController {
 
     public void sendCommand(int command) {
         byte[] commands = {(byte)(command & 0xFF)};
-        digitalWrite(DC_PIN, LOW);
-        wiringPiSPIDataRW(CHANNEL, commands, 1);
+// Uncomment when SPI working
+//        digitalWrite(DC_PIN, LOW);
+//        wiringPiSPIDataRW(CHANNEL, commands, 1);
     }
 
     public void begin() {
-        pinMode(RST_PIN, OUTPUT);
-        pinMode(DC_PIN, OUTPUT);
-        wiringPiSPISetup(CHANNEL, 2000000);    //2M
-
-        digitalWrite(RST_PIN, HIGH);
-        delay(10);
-        digitalWrite(RST_PIN, LOW);
-        delay(10);
-        digitalWrite(RST_PIN, HIGH);
+// Uncomment when SPI working
+//        pinMode(RST_PIN, OUTPUT);
+//        pinMode(DC_PIN, OUTPUT);
+//        wiringPiSPISetup(CHANNEL, 2000000);    //2M
+//
+//        digitalWrite(RST_PIN, HIGH);
+//        delay(10);
+//        digitalWrite(RST_PIN, LOW);
+//        delay(10);
+//        digitalWrite(RST_PIN, HIGH);
 
         sendCommand(DISPLAY_OFF);          //Display Off
         sendCommand(SET_CONTRAST_A);       //Set contrast for color A

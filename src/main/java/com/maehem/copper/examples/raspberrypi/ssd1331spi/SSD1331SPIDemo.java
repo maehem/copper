@@ -31,12 +31,13 @@ import java.io.*;
 public class SSD1331SPIDemo {
     public static void main(String[] args) {
         SSD1331SPI oled = new SSD1331SPI();
-        if (oled.wiringPiSetup() < 0) {
-            System.out.println("WiringPi setup error");
-            return;
-        }
-        oled.begin();
-        oled.pinMode(oled.RST_PIN, oled.OUTPUT);
+// Uncomment when SPI working
+//        if (oled.initialise()< 0) {
+//            System.out.println("WiringPi setup error");
+//            return;
+//        }
+//        oled.begin();
+//        oled.pinMode(oled.RST_PIN, oled.OUTPUT);
 
         oled.clearFrameBuffer();
         oled.showImage(0, 0, new File("anne.bmp"));

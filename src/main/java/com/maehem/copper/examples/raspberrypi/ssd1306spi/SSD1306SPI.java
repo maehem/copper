@@ -20,13 +20,13 @@ package com.maehem.copper.examples.raspberrypi.ssd1306spi;
   ***********************************************************************
  */
 
-import com.maehem.copper.pi.NativeController;
+import com.maehem.copper.pi.NativeControllerOld;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
 
-public class SSD1306SPI extends NativeController {
+public class SSD1306SPI extends NativeControllerOld {
     final public int OLED_WIDTH                                    = 128;
     final public int OLED_HEIGHT                                   = 64;
     final public int NUM_PAGES                                     = 8;
@@ -80,8 +80,9 @@ public class SSD1306SPI extends NativeController {
         sendCommand(PAGEADDR);
         sendCommand(0);                     // page start address
         sendCommand(NUM_PAGES - 1);         // page end address
-        digitalWrite(DC_PIN, HIGH);
-        wiringPiSPIDataRW(CHANNEL, frameBuffer, OLED_WIDTH * OLED_HEIGHT / 8);
+// Uncomment when SPI working
+//       digitalWrite(DC_PIN, HIGH);
+//        wiringPiSPIDataRW(CHANNEL, frameBuffer, OLED_WIDTH * OLED_HEIGHT / 8);
     }
 
     public void showString(String string, int x, int y, Font font, boolean color) {
@@ -170,19 +171,21 @@ public class SSD1306SPI extends NativeController {
 
     public void sendCommand(int command) {
         byte[] commands = {(byte)(command & 0xFF)};
-        digitalWrite(DC_PIN, LOW);
-        wiringPiSPIDataRW(CHANNEL, commands, 1);
+// Uncomment when SPI working
+//        digitalWrite(DC_PIN, LOW);
+//        wiringPiSPIDataRW(CHANNEL, commands, 1);
     }
 
     public void begin() {
-        pinMode(RST_PIN, OUTPUT);
-        pinMode(DC_PIN, OUTPUT);
-        wiringPiSPISetup(CHANNEL, 2000000);    //2M
-        digitalWrite(RST_PIN, HIGH);
-        delay(10);
-        digitalWrite(RST_PIN, LOW);
-        delay(10);
-        digitalWrite(RST_PIN, HIGH);
+// Uncomment when SPI working
+//        setMode(RST_PIN, OUTPUT);
+//        setMode(DC_PIN, OUTPUT);
+//        wiringPiSPISetup(CHANNEL, 2000000);    //2M
+//        write(RST_PIN, HIGH);
+//        delay(10);
+//        write(RST_PIN, LOW);
+//        delay(10);
+//        write(RST_PIN, HIGH);
 
         sendCommand(DISPLAYOFF);
         sendCommand(SETDISPLAYCLOCKDIV);
