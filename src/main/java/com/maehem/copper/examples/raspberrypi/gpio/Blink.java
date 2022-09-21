@@ -1,6 +1,3 @@
-package com.maehem.copper.examples.raspberrypi.gpio;
-
-
 /*
  * This is free and unencumbered software released into the public domain.
  * Anyone is free to copy, modify, publish, use, compile, sell, or
@@ -23,15 +20,22 @@ package com.maehem.copper.examples.raspberrypi.gpio;
  * OTHER DEALINGS IN THE SOFTWARE.
  * For more information, please refer to <http://unlicense.org/>
  */
+package com.maehem.copper.examples.raspberrypi.gpio;
+
 import static com.maehem.copper.pi.BasicInterface.*;
 import com.maehem.copper.pi.NativeControllerImpl;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class GPIODemo {
-    public static final Logger logger = Logger.getLogger("Copper - PiGPIO Java Demo");
+/**
+ * Blink Demo for PiGPIO using Copper
+ * 
+ * @author Mark J. Koch (GitHub @maehem)
+ */
+public class Blink {
+    public static final Logger logger = Logger.getLogger("Blink");
     
-    private static final int PIN = 21;
+    private static final int PIN = 21;  // BCM Pin
     private static final int DELAY = 1000000;
 
     public static void main(String[] args) {
@@ -39,6 +43,8 @@ public class GPIODemo {
         if (gpio.initialise()< 0) {
             logger.log( Level.SEVERE, "PiGPIO setup error");
             return;
+        } else {
+            logger.log( Level.INFO, "Copper: PiGPIO Blink Demo");
         }
         gpio.setMode(PIN, OUTPUT);
         while(true) {
