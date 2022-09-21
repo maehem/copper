@@ -51,7 +51,7 @@ public interface EssentialInterface {
      *}</pre>
      * </p>
      *
-     * @return piGpio verion number if OK, otherwise PI_INIT_FAILED.
+     * @return piGpio version number if OK, otherwise PI_INIT_FAILED.
      */
     public int initialise();
     
