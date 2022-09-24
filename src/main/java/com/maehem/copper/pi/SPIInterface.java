@@ -130,15 +130,25 @@ public interface SPIInterface {
      * char *buf, unsigned count) This function writes count bytes of data from
      * buf to the SPI device associated with the handle.
      *
-     * handle: >=0, as returned by a call to spiOpen buf: the data bytes to
-     *
-     * @param handle >=0
+     * @param handle >=0, as returned by a call to spiOpen
      * @param buf array to receive bytes into
      * @param count the number of bytes to write
      * @return the number of bytes transferred if OK, otherwise PI_BAD_HANDLE,
      * PI_BAD_SPI_COUNT, or PI_SPI_XFER_FAILED.
      */
     public int spiRead(int handle, byte buf[], int count);
+
+    /**
+     * This function writes count bytes of data from buf to the SPI device
+     * associated with the handle.
+     *
+     * @param handle >=0, as returned by a call to spiOpen
+     * @param buf array of bytes to transfer
+     * @param count number of bytes to transfer
+     * @return the number of bytes transferred if OK, otherwise PI_BAD_HANDLE,
+ PI_BAD_SPI_COUNT, or PI_SPI_XFER_FAILED.
+     */
+    int spiWrite(int handle, byte buf[], int count);
 
     /**
      * Transfers count bytes of data from txBuf to the SPI device associated

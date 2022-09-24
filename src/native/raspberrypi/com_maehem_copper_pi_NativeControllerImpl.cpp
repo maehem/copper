@@ -277,6 +277,19 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_spiRead
 
 /*
  * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    spiWrite
+ * Signature: (I[BI)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_spiWrite
+  (JNIEnv *env, jobject obj, jint handle, jbyteArray buffer, jint count) {
+    jbyte* b = env->GetByteArrayElements(buffer, NULL);
+    int ret = spiWrite( handle, (char *)b, count );
+    env->ReleaseByteArrayElements( buffer, b, 0);
+    return ret;
+}
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
  * Method:    spiXfer
  * Signature: (I[B[BI)I
  */

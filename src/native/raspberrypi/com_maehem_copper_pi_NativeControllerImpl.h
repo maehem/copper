@@ -209,6 +209,14 @@ JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_spiRead
 
 /*
  * Class:     com_maehem_copper_pi_NativeControllerImpl
+ * Method:    spiWrite
+ * Signature: (I[BI)I
+ */
+JNIEXPORT jint JNICALL Java_com_maehem_copper_pi_NativeControllerImpl_spiWrite
+  (JNIEnv *, jobject, jint, jbyteArray, jint);
+
+/*
+ * Class:     com_maehem_copper_pi_NativeControllerImpl
  * Method:    spiXfer
  * Signature: (I[B[BI)I
  */
