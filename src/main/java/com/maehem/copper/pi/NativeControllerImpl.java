@@ -106,6 +106,9 @@ public class NativeControllerImpl extends PiGPIOInterface {
     public native int spiRead(int handle, byte[] buf, int count);
 
     @Override
+    public native int spiWrite(int handle, byte[] buf, int count);
+
+    @Override
     public native int spiXfer(int handle, byte[] txBuf, byte[] rxBuf, int count);
 
     //
@@ -171,5 +174,6 @@ public class NativeControllerImpl extends PiGPIOInterface {
          
 //    @Override
 //    public native int i2cZip(int handle, byte[] inBuf, int inLen, byte[] outBuf, int outLen);
+
 
 }
