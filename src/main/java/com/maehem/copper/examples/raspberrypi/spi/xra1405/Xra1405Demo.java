@@ -33,20 +33,23 @@ public class Xra1405Demo {
         }
         
         gpio.setMode(CS_PIN, OUTPUT);
-        //gpio.write(RESET_PIN, HIGH);
-
+        gpio.write(CS_PIN, HIGH);
+        
         int handle = gpio.spiOpen(0, SPI_BAUD, 0);
+        Xra1405Device device = new Xra1405Device(gpio, handle, CS_PIN);
         
         // PUR1 to pullups.
-        Xra1405Device.write( gpio, handle, (byte)0xff);
-        Xra1405Device.setReg(gpio, handle, Xra1405Device.PUR1, (byte) 0b00000000); // All inputs
-        Xra1405Device.setReg(gpio, handle, Xra1405Device.PUR2, (byte) 0b11100000); // upper 3 are output: led1, led2 and rumble
-        Xra1405Device.setReg(gpio, handle, Xra1405Device.OCR1, (byte) 0b00000000); // output pins to 0.
+        device.setReg( Xra1405Device.GCR1, (byte) 0b11111111); // All inputs
+        device.setReg( Xra1405Device.GCR2, (byte) 0b00011111); // upper 3 are output: led1, led2 and rumble
+        device.setReg( Xra1405Device.PUR1, (byte) 0b11111111); // All inputs-pullups
+        device.setReg( Xra1405Device.PUR2, (byte) 0b00011111); // 0:5 pullups. upper 3 are output: led1, led2 and rumble
+
+        device.setReg( Xra1405Device.OCR1, (byte) 0b00000000); // output pins to 0.
         
         while(true) {
             // Read Pins and print
             Byte[] vals = new Byte[1];
-            int ret = Xra1405Device.getReg(gpio, handle, Xra1405Device.GSR1, vals );
+            int ret = device.getReg(Xra1405Device.GSR1, vals );
             if ( ret < 0 ) {
                 logger.severe("SPI read of register GSR1 failed!");
                 System.exit(100);
@@ -55,7 +58,7 @@ public class Xra1405Demo {
                     "XRA1405 Button Read:{0}", 
                     String.format(
                             "%8s", 
-                            Integer.toBinaryString(vals[0]))
+                            Integer.toBinaryString(vals[0]&0xFF))
                                 .replace(' ', '0'));
         }
                 

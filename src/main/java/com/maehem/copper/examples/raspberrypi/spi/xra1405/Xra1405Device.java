@@ -22,6 +22,8 @@
  */
 package com.maehem.copper.examples.raspberrypi.spi.xra1405;
 
+import static com.maehem.copper.pi.BasicInterface.HIGH;
+import static com.maehem.copper.pi.BasicInterface.LOW;
 import com.maehem.copper.pi.NativeControllerImpl;
 
 
@@ -29,6 +31,10 @@ import com.maehem.copper.pi.NativeControllerImpl;
  * Implementation of the Exar XRA1405 GPIO Expander using SPI with Copper
  */
 public class Xra1405Device {
+    private final NativeControllerImpl gpio;
+    private final int handle;
+    private final int csPin;
+    
     /**
      * Default SPI channel
      */
@@ -63,31 +69,42 @@ public class Xra1405Device {
     public static final byte IFR1  = (byte)0x14<<1; // Input Filter Enable/Disable for P0-P7
     public static final byte IFR2  = (byte)0x15<<1; // Input Filter Enable/Disable for P8-P15
 
+    public Xra1405Device( NativeControllerImpl gpio, int handle, int csPin ) {
+        this.gpio = gpio;
+        this.csPin = csPin;
+        this.handle = handle;
+    }
     
-    public static int setReg( NativeControllerImpl gpio, int handle, byte reg, byte val ) {
+    public int setReg( byte reg, byte val ) {
         byte[] packet = { reg, val };
-        return write ( gpio, handle, packet );
+        
+        return write ( packet );
     }
     
     // TODO: change to 'throws' so that we can return byte as value.
-    public static int getReg( NativeControllerImpl gpio, int handle, byte reg, Byte[] val ) {
+    public int getReg( byte reg, Byte[] val ) {
         byte[] packet = { (byte)(0x80 | reg) }; // Add read flag
-        int ret = write ( gpio, handle, packet );
+        int ret = write ( packet );
         if ( ret < 0 ) {
             return ret;
         }
         byte rVal[] = new byte[1];
+        gpio.write(csPin, LOW);
         ret =  gpio.spiRead(handle, rVal, 1);
+        gpio.write(csPin, HIGH);
         val[0] = rVal[0];
         return ret;
     }
     
-    public static int write( NativeControllerImpl gpio, int handle, byte[] val ) {
-       return gpio.spiWrite(handle, val, val.length);
+    public int write( byte[] val ) {
+        gpio.write(csPin, LOW);
+        int ret = gpio.spiWrite(handle, val, val.length);
+        gpio.write(csPin, HIGH);
+        return ret;
     }
     
-    public static int write( NativeControllerImpl gpio, int handle, byte val ) {
-       return write(gpio,handle, new byte[]{val});
+    public int write( byte val ) {
+       return write(new byte[]{val});
     }
     
 }
