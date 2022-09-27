@@ -44,7 +44,7 @@ public class Xra1405Demo {
         device.setReg( Xra1405Device.PUR1, (byte) 0b11111111); // All inputs-pullups
         device.setReg( Xra1405Device.PUR2, (byte) 0b00011111); // 0:5 pullups. upper 3 are output: led1, led2 and rumble
 
-        device.setReg( Xra1405Device.OCR1, (byte) 0b00000000); // output pins to 0.
+        device.setReg( Xra1405Device.OCR2, (byte) 0b00000000); // output pins to 0.
         
         while(true) {
             // Read Pins and print
