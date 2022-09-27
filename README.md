@@ -1,79 +1,103 @@
-# Copper: a derivative of [*jwiringpi*](https://github.com/soonuse/jwiringpi)
-Java native implementation for Raspberry Pi extension GPIO control (GPIO, SPI, I2C, PWM...), based on WiringPi library.
+# Copper: a JNI Library for *PiGPIO*
+Java native implementation for Raspberry Pi extension GPIO control (GPIO, SPI, I2C, PWM...), based on PiGPIO library.
 
 ## Description
-The *Copper* project is dedicated to creating an convenient and easy-to-use Java class library for Raspberry Pi extension GPIO control (GPIO, SPI, I2C, PWM...). In fact, this project provides a wrapper for WiringPi library. So in most cases, you can use it just like wiringPi library on Raspberry Pi. Fortunately, WiringPi library is preloaded in the latest Raspbian operating system, and there are no need to do any complex settings.
-
-In addition, the source code (.java and .c) are provided to help users to understand the work of the Java native interface (JNI). You can also easily control the source on Pi by Java implement the corresponding interface or just control the source on Pi by Java.
+The *Copper* project is dedicated to creating an convenient and easy-to-use Java class library for Raspberry Pi extension GPIO control (GPIO, SPI, I2C, PWM...). This project provides a wrapper for PiGPIO library. In most cases, you can use it just like PiGPIO library on Raspberry Pi. PiGPIO library is preloaded in the latest Raspbian operating system, and works without any additional tuning.
 
 ## How to use
-Unlike other Java wrappers for Pi's GPIO control, you can simply use this Java package in Raspbian operating system without complex settings. Just follow these 2 steps:
+You can use this Java package in Raspbian operating system without complex settings. Just follow these 2 steps:
 
-1.  copy the file libc4copper.so to the system library path e.g. /usr/lib.
+1.  copy the file libcopper.so to the system library path e.g. /usr/lib.
 ```
-        sudo cp libc4copper.so /usr/lib
+        sudo cp libcopper.so /usr/lib
 ```
-2.  copy the directory jwringpi to your project.<br>
-     TODO: include copper.jar in your class/jar path
+2.  Invoke Java on your maven compiled project jar:<br>
+     sudo java -cp target/copper-0.1-SNAPSHOT.jar com.maehem.copper.examples.raspberrypi.spi.xra1405.Xra1405Demo
 
 *   Note: If you don't want to copy the library to the /usr/lib, you can specify the library path before running your Java program, like:
 ```
-         java -Djava.library.path=. YourProgram
+         sudo java -Djava.library.path=. -cp target/copper-0.1-SNAPSHOT.jar com.maehem.copper.examples.raspberrypi.spi.xra1405.Xra1405Demo
 ```
 (this specifies the . directory as the native library path.)
 
 ## Methods Copper provides
-You can invoke these methods by instantiating *com.maehem.copper.pi.Controller*
+You can invoke these methods by instantiating *com.maehem.copper.pi.NativeControllerImpl*
 
-### Implements SetupInterface
+### Implements EssentialInterface
 ```java
-    int wiringPiSetup();
-    int wiringPiSetupGpio();
-    int wiringPiSetupPhys();
-    int wiringPiSetupSys();
+    int initialise();
+    int terminate();
 ```
 
-### Implements CoreInterface
+### Implements BasicInterface
 ```java
-    void pinMode(int pin, int mode);
-    void pullUpDnControl(int pin, int pud);
-    void digitalWrite(int pin, int value);
-    void pwmWrite(int pin, int value);
-    int digitalRead(int pin);
-    int analogRead(int pin);
-    void analogWrite(int pin, int value);
+    int setMode(int pin, int mode);
+    int getMode(int pin);
+    int setPullUpDown(int pin, int pud);
+    int read(int pin);
+    int write(int pin, int level);
 ```
 
-### Implements TimingInterface
+### Implements PWMInterface
 ```java
-    int millis();
-    int micros();
-    void delay(int howLong);
-    void delayMicroseconds(int howLong);
+    int pwm(int pin, int duty);
+    int pwmGetDutyCycle(int pin);
+    int pwmSetFrequency(int pin, int freq);
+    int pwmGetFrequency(int pin);
+    int pwmSetRange(int pin, int range);
+    int pwmGetRange(int pin);
+    int pwmGetRealRange(int pin);
+```
+### Implements ServoInterface
+```java
+    int servo(int pin, int pulseWidth);
+    int servoGetPulsewidth(int pin);
 ```
 
+### Implements UtilitiesInterface
+```java
+    int getVersion();
+    int getHardwareRevision();
+    int[] time(int type);
+    int sleep(int type, int seconds, int micros);
+    int delay(long micros);
+    int tick();
+```
 ### Implements SPIInterface
 ```java
-    int wiringPiSPISetup(int channel, int speed);
-    int wiringPiSPIDataRW(int channel, byte[] data, int len);
+    int spiOpen(int spiChan, int baud, int spiFlags);
+    int spiClose(int handle);
+    int spiRead(int handle, byte[] buf, int count);
+    int spiWrite(int handle, byte[] buf, int count);
+    int spiXfer(int handle, byte[] txBuf, byte[] rxBuf, int count);
 ```
 
 ### Implements I2CInterface
 ```java
-    int wiringPiI2CSetup (int devId);
-    int wiringPiI2CRead (int fd);
-    int wiringPiI2CWrite (int fd, int data);
-    int wiringPiI2CWrite (int fd, byte[] data, int length);
-    int wiringPiI2CWriteReg8 (int fd, int reg, int data);
-    int wiringPiI2CWriteReg16 (int fd, int reg, int data);
-    int wiringPiI2CReadReg8 (int fd, int reg);
-    int wiringPiI2CReadReg16 (int fd, int reg);
+    int i2cOpen(int i2cBus, int i2cAddr, int i2cFlags);
+    int i2cClose(int handle);
+    int i2cWriteQuick(int handle, int bit);
+    int i2cWriteByte(int handle, int bVal);
+    int i2cReadByte(int handle);
+    int i2cWriteByteData(int handle, int i2cReg, int bVal);
+    int i2cWriteWordData(int handle, int i2cReg, int wVal);
+    int i2cReadByteData(int handle, int i2cReg);
+    int i2cReadWordData(int handle, int i2cReg);
+    int i2cProcessCall(int handle, int i2cReg, int wVal);
+    int i2cWriteBlockData(int handle, int i2cReg, byte[] buf, int count);
+    int i2cReadBlockData(int handle, int i2cReg, byte[] buf);
+    int i2cBlockProcessCall(int handle, int i2cReg, byte[] buf, int count);
+    int i2cReadI2CBlockData(int handle, int i2cReg, byte[] buf, int count);
+    int i2cWriteI2CBlockData(int handle, int i2cReg, byte[] buf, int count);
+    int i2cReadDevice(int handle, byte[] buf, int count);
+    int i2cWriteDevice(int handle, byte[] buf, int count);
+    void i2cSwitchCombined(int setting);
 ```
 
 ## Getting started
 A demo for getting started.
-1.  copy the file libc4copper.so to /usr/lib <br />
-```sudo cp libc4copper.so /usr/lib```
+1.  copy the file libcopper.so to /usr/lib <br />
+```sudo cp libcopper.so /usr/lib```
 2.  save the following as RPiGPIODemo.java:
 
 ```java
@@ -100,41 +124,42 @@ public class RPiGPIODemo {
     }
 }
 ```
-
-3.  copy the directory jwiringpi to the directory of RPiGPIODemo.java
+## TODO Update for using Maven i.e. Include copper from mvn repo.
+3.  copy the directory pigpio to the directory of RPiGPIODemo.java
 4.  compile the program with
         `javac RPiGPIODemo.java`
+        future: mvn package
 5.  run the program
         `java RPiGPIODemo`
-6.  expected result: the voltage level of pin 25 will be toggled continuously.
-*   Note: the pins are named by WiringPi pin mapping. The pin25 in WiringPi is the pin37 in physical.
+        sudo java -cp target/copper-0.1-SNAPSHOT.jar RPiGPIODemo
+6.  expected result: the voltage level of GPIO.29 pin will be toggled continuously.
 
 ```
-## Pin mapping of Raspberry Pi 3 Model B
- +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
- | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
- +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
- |     |     |    3.3v |      |   |  1 || 2  |   |      | 5v      |     |     |
- |   2 |   8 |   SDA.1 | ALT0 | 1 |  3 || 4  |   |      | 5v      |     |     |
- |   3 |   9 |   SCL.1 | ALT0 | 1 |  5 || 6  |   |      | 0v      |     |     |
- |   4 |   7 | GPIO. 7 |   IN | 1 |  7 || 8  | 1 | ALT5 | TxD     | 15  | 14  |
- |     |     |      0v |      |   |  9 || 10 | 1 | ALT5 | RxD     | 16  | 15  |
- |  17 |   0 | GPIO. 0 |   IN | 0 | 11 || 12 | 0 | IN   | GPIO. 1 | 1   | 18  |
- |  27 |   2 | GPIO. 2 |   IN | 0 | 13 || 14 |   |      | 0v      |     |     |
- |  22 |   3 | GPIO. 3 |   IN | 0 | 15 || 16 | 0 | IN   | GPIO. 4 | 4   | 23  |
- |     |     |    3.3v |      |   | 17 || 18 | 0 | IN   | GPIO. 5 | 5   | 24  |
- |  10 |  12 |    MOSI | ALT0 | 0 | 19 || 20 |   |      | 0v      |     |     |
- |   9 |  13 |    MISO | ALT0 | 0 | 21 || 22 | 0 | IN   | GPIO. 6 | 6   | 25  |
- |  11 |  14 |    SCLK | ALT0 | 0 | 23 || 24 | 1 | OUT  | CE0     | 10  | 8   |
- |     |     |      0v |      |   | 25 || 26 | 1 | OUT  | CE1     | 11  | 7   |
- |   0 |  30 |   SDA.0 |   IN | 1 | 27 || 28 | 1 | IN   | SCL.0   | 31  | 1   |
- |   5 |  21 | GPIO.21 |   IN | 1 | 29 || 30 |   |      | 0v      |     |     |
- |   6 |  22 | GPIO.22 |   IN | 1 | 31 || 32 | 0 | IN   | GPIO.26 | 26  | 12  |
- |  13 |  23 | GPIO.23 |   IN | 0 | 33 || 34 |   |      | 0v      |     |     |
- |  19 |  24 | GPIO.24 |  OUT | 1 | 35 || 36 | 1 | OUT  | GPIO.27 | 27  | 16  |
- |  26 |  25 | GPIO.25 |   IN | 0 | 37 || 38 | 0 | IN   | GPIO.28 | 28  | 20  |
- |     |     |      0v |      |   | 39 || 40 | 0 | IN   | GPIO.29 | 29  | 21  |
- +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
- | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
- +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
+## Pin mapping of Raspberry Pi
+ +-----+---------+------+----Pi 3/4/Z/Z2---+------+---------+-----+
+ | BCM |   Name  | Mode | V | Physical | V | Mode | Name    | BCM |
+ +-----+---------+------+---+----++----+---+------+---------+-----+
+ |     |    3.3v |      |   |  1 || 2  |   |      | 5v      |     |
+ |   2 |   SDA.1 | ALT0 | 1 |  3 || 4  |   |      | 5v      |     |
+ |   3 |   SCL.1 | ALT0 | 1 |  5 || 6  |   |      | 0v      |     |
+ |   4 | GPIO. 7 |   IN | 1 |  7 || 8  | 1 | ALT5 | TxD     | 14  |
+ |     |     GND |      |   |  9 || 10 | 1 | ALT5 | RxD     | 15  |
+ |  17 | GPIO.17 |   IN | 0 | 11 || 12 | 0 | IN   | GPIO.18 | 18  |
+ |  27 | GPIO.27 |   IN | 0 | 13 || 14 |   |      | 0v      |     |
+ |  22 | GPIO.22 |   IN | 0 | 15 || 16 | 0 | IN   | GPIO.23 | 23  |
+ |     |    3.3v |      |   | 17 || 18 | 0 | IN   | GPIO.24 | 24  |
+ |  10 |SPI0.DI  | ALT0 | 0 | 19 || 20 |   |      | 0v      |     |
+ |   9 |SPI0.DO  | ALT0 | 0 | 21 || 22 | 0 | IN   | GPIO.25 | 25  |
+ |  11 |SPI0.CLK | ALT0 | 0 | 23 || 24 | 1 | OUT  | SPI0.CE0| 8   |
+ |     |     GND |      |   | 25 || 26 | 1 | OUT  | SPI0.CE1| 7   |
+ |   0 |   SDA.0 |   IN | 1 | 27 || 28 | 1 | IN   | SCL.0   | 1   |
+ |   5 | GPIO.5  |   IN | 1 | 29 || 30 |   |      | 0v      |     |
+ |   6 | GPIO.6  |   IN | 1 | 31 || 32 | 0 | IN   | GPIO.12 | 12  |
+ |  13 | GPIO.13 |   IN | 0 | 33 || 34 |   |      | 0v      |     |
+ |  19 | GPIO.19 |  OUT | 1 | 35 || 36 | 1 | OUT  | GPIO.16 | 16  |
+ |  26 | GPIO.26 |   IN | 0 | 37 || 38 | 0 | IN   | GPIO.20 | 20  |
+ |     |     GND |      |   | 39 || 40 | 0 | IN   | GPIO.21 | 21  |
+ +-----+---------+------+---+----++----+---+------+---------+-----+
+ | BCM |   Name  | Mode | V | Physical | V | Mode | Name    | BCM |
+ +-----+---------+------+---+----------+---+------+---------+-----+
 ```
