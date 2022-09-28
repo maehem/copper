@@ -6,19 +6,30 @@ The *Copper* project is dedicated to creating an convenient and easy-to-use Java
 
 ## How to use
 You can use this Java package in Raspbian operating system without complex settings. Just follow these 2 steps:
+1.  On your Raspberry Pi, compile *Copper* from the top folder (you may need to review pom.xml and update Java version)
+```
+    mvn package
+```
+A Jar file will have been generated. It might also have been copied to your
+Maven repository cache (in your home directory under .m2). The Jar file
+contains the Java library as well as some demo examples.
 
-1.  copy the file libcopper.so to the system library path e.g. /usr/lib.
+2.  Compile the libcopper.so and copy it to your /usr/lib directory:
 ```
-        sudo cp libcopper.so /usr/lib
+    cd src/java/native
+    ./compile.sh
+    sudo cp libcopper.so /usr/lib
 ```
-2.  Invoke Java on your maven compiled project jar:<br>
+3.  Run a demo. Invoke Java on your Maven compiled project jar:<br>
+    Do this from the top level of the git project.
+```
      sudo java -cp target/copper-0.1-SNAPSHOT.jar com.maehem.copper.examples.raspberrypi.spi.xra1405.Xra1405Demo
-
+```
 *   Note: If you don't want to copy the library to the /usr/lib, you can specify the library path before running your Java program, like:
 ```
          sudo java -Djava.library.path=. -cp target/copper-0.1-SNAPSHOT.jar com.maehem.copper.examples.raspberrypi.spi.xra1405.Xra1405Demo
 ```
-(this specifies the . directory as the native library path.)
+(this specifies the . directory as the native library path, so the libcopper.so should be found there.)
 
 ## Methods Copper provides
 You can invoke these methods by instantiating *com.maehem.copper.pi.NativeControllerImpl*
@@ -109,17 +120,17 @@ public class RPiGPIODemo {
     public static final int OUTPUT = 1;
 
     public static void main(String[] args) {
-        JWiringPiController gpio = new JWiringPiController();
-        if (gpio.wiringPiSetup() < 0) {
-            System.out.println("WiringPi setup error");
+        NativeControllerImpl gpio = new NativeControllerImpl();
+        if (gpio.initialise() < 0) {
+            System.out.println("PiGPIO/Copper setup error");
             return;
         }
-        gpio.pinMode(25, OUTPUT);
+        gpio.setMode(25, OUTPUT);
         while(true) {
-            gpio.digitalWrite(25, HIGH);
-            gpio.delay(1000);
-            gpio.digitalWrite(25, LOW);
-            gpio.delay(1000);
+            gpio.write(25, HIGH);
+            gpio.delay(1000000);
+            gpio.write(25, LOW);
+            gpio.delay(1000000);
         }
     }
 }
@@ -134,8 +145,8 @@ public class RPiGPIODemo {
         sudo java -cp target/copper-0.1-SNAPSHOT.jar RPiGPIODemo
 6.  expected result: the voltage level of GPIO.29 pin will be toggled continuously.
 
-```
 ## Pin mapping of Raspberry Pi
+```
  +-----+---------+------+----Pi 3/4/Z/Z2---+------+---------+-----+
  | BCM |   Name  | Mode | V | Physical | V | Mode | Name    | BCM |
  +-----+---------+------+---+----++----+---+------+---------+-----+
@@ -163,3 +174,7 @@ public class RPiGPIODemo {
  | BCM |   Name  | Mode | V | Physical | V | Mode | Name    | BCM |
  +-----+---------+------+---+----------+---+------+---------+-----+
 ```
+### NOTE: This project started as a fork of jWiringPi but soon realized that
+PiGPIO is now the official way to interact with GPIO on a Raspberry Pi.  The
+author of Copper liked the format for the GIT project and decided to use it
+as the basis for the Copper project.
