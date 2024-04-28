@@ -89,17 +89,17 @@ public class Xra1405Device {
             return ret;
         }
         byte rVal[] = new byte[1];
-        gpio.write(csPin, LOW);
+        //gpio.write(csPin, LOW); // Shouldn't need this with CE0 (chan 0)
         ret =  gpio.spiRead(handle, rVal, 1);
-        gpio.write(csPin, HIGH);
+        //gpio.write(csPin, HIGH);
         val[0] = rVal[0];
         return ret;
     }
     
     public int write( byte[] val ) {
-        gpio.write(csPin, LOW);
+        //gpio.write(csPin, LOW);
         int ret = gpio.spiWrite(handle, val, val.length);
-        gpio.write(csPin, HIGH);
+        //gpio.write(csPin, HIGH);
         return ret;
     }
     

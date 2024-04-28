@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class Xra1405Demo {
     public static final Logger logger = Logger.getLogger("XRA1405 Demo");
 
-    private static final int CS_PIN = 7; // (BCM)
+    private static final int CS_PIN = 8; // (BCM) CE0
     private static final int SPI_BAUD = 100000;
 
     public static void main(String[] args) {
@@ -32,8 +32,8 @@ public class Xra1405Demo {
             logger.log(Level.INFO, "Copper: PiGPIO XRA1405 Demo");
         }
         
-        gpio.setMode(CS_PIN, OUTPUT);
-        gpio.write(CS_PIN, HIGH);
+        //gpio.setMode(CS_PIN, OUTPUT);  // Shouldn't need this on CE0 or CE1
+        //gpio.write(CS_PIN, HIGH);
         
         int handle = gpio.spiOpen(0, SPI_BAUD, 0);
         Xra1405Device device = new Xra1405Device(gpio, handle, CS_PIN);

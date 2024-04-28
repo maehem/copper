@@ -20,9 +20,10 @@ package com.maehem.copper.examples.raspberrypi.at24;
   ***********************************************************************
  */
  
-import com.maehem.copper.pi.NativeControllerOld;
+import com.maehem.copper.pi.NativeControllerImpl;
+//import com.maehem.copper.pi.NativeControllerOld;
 
-public class AT24EEPROM extends NativeControllerOld {
+public class AT24EEPROM extends NativeControllerImpl {
     public static final int ADDR_AT24C04_FIRST_16_PAGES = 0x50;
     public static final int ADDR_AT24C04_LAST_16_PAGES = 0x51;
     public static final int AT24C04_PAGE_SIZE = 16;
@@ -36,6 +37,8 @@ public class AT24EEPROM extends NativeControllerOld {
             System.out.println("PiGPIO setup error.");
             System.exit(-1);
         }
+        this.fdFirst16Pages = i2cOpen(0, ADDR_AT24C04_FIRST_16_PAGES, 0);
+        this.fdLast16Pages = i2cOpen(0, ADDR_AT24C04_LAST_16_PAGES, 0);
 //        this.fdFirst16Pages = this.wiringPiI2CSetup(ADDR_AT24C04_FIRST_16_PAGES);
 //        this.fdLast16Pages = this.wiringPiI2CSetup(ADDR_AT24C04_LAST_16_PAGES);
     }
@@ -54,7 +57,6 @@ public class AT24EEPROM extends NativeControllerOld {
                 subBuffer[i] = data[dataIndex];
                 dataIndex++;
             }
-// Uncomment when I2C working
             state = i2cWriteDevice(this.fdFirst16Pages, subBuffer, subBuffer.length);
             if (state != subBuffer.length) {
                 System.out.println("write error: " + state);
@@ -73,13 +75,12 @@ public class AT24EEPROM extends NativeControllerOld {
                 dataIndex++;
             }
 
-// Uncomment when I2C working
-//            state = wiringPiI2CWrite(this.fdLast16Pages, subBuffer, subBuffer.length);
-//            if (state != subBuffer.length) {
-//                // write error
-//                System.out.println("write error: " + state);
-//                return -1;
-//            }
+            state = i2cWriteDevice(this.fdLast16Pages, subBuffer, subBuffer.length);
+            if (state != subBuffer.length) {
+                // write error
+                System.out.println("write error: " + state);
+                return -1;
+            }
             this.delay(20);
             page++;
         }
@@ -90,13 +91,12 @@ public class AT24EEPROM extends NativeControllerOld {
         byte[] data = new byte[BUFFER_SIZE];
 
         // Specify the start address to read: 0 offset from the head of first 16 pages
-// Uncomment when I2C working
-//        wiringPiI2CWrite(this.fdFirst16Pages, 0);
-//
-//        // Read data continuously from EEPROM
-//        for (int i = 0; i < BUFFER_SIZE; i++) {
-//            data[i] = (byte)wiringPiI2CRead(this.fdFirst16Pages);
-//        }
+        i2cWriteByte(this.fdFirst16Pages, 0);
+
+        // Read data continuously from EEPROM
+        for (int i = 0; i < BUFFER_SIZE; i++) {
+            data[i] = (byte)i2cReadByte(this.fdFirst16Pages); //byte)wiringPiI2CRead(this.fdFirst16Pages);
+        }
         return data;    
     }
 }

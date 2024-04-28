@@ -113,11 +113,10 @@ A demo for getting started.
 
 ```java
 import com.maehem.copper.pi.*;
+import static com.maehem.copper.pi.BasicInterface.*;
 
 public class RPiGPIODemo {
-    public static final int HIGH = 1;
-    public static final int LOW = 0;
-    public static final int OUTPUT = 1;
+    public static final int PIN = 25;
 
     public static void main(String[] args) {
         NativeControllerImpl gpio = new NativeControllerImpl();
@@ -125,11 +124,11 @@ public class RPiGPIODemo {
             System.out.println("PiGPIO/Copper setup error");
             return;
         }
-        gpio.setMode(25, OUTPUT);
+        gpio.setMode(PIN, OUTPUT);
         while(true) {
-            gpio.write(25, HIGH);
+            gpio.write(PIN, HIGH);
             gpio.delay(1000000);
-            gpio.write(25, LOW);
+            gpio.write(PIN, LOW);
             gpio.delay(1000000);
         }
     }
@@ -152,21 +151,21 @@ public class RPiGPIODemo {
  +-----+---------+------+---+----++----+---+------+---------+-----+
  |     |    3.3v |      |   |  1 || 2  |   |      | 5v      |     |
  |   2 |   SDA.1 | ALT0 | 1 |  3 || 4  |   |      | 5v      |     |
- |   3 |   SCL.1 | ALT0 | 1 |  5 || 6  |   |      | 0v      |     |
+ |   3 |   SCL.1 | ALT0 | 1 |  5 || 6  |   |      | GND     |     |
  |   4 | GPIO. 7 |   IN | 1 |  7 || 8  | 1 | ALT5 | TxD     | 14  |
  |     |     GND |      |   |  9 || 10 | 1 | ALT5 | RxD     | 15  |
  |  17 | GPIO.17 |   IN | 0 | 11 || 12 | 0 | IN   | GPIO.18 | 18  |
- |  27 | GPIO.27 |   IN | 0 | 13 || 14 |   |      | 0v      |     |
+ |  27 | GPIO.27 |   IN | 0 | 13 || 14 |   |      | GND     |     |
  |  22 | GPIO.22 |   IN | 0 | 15 || 16 | 0 | IN   | GPIO.23 | 23  |
  |     |    3.3v |      |   | 17 || 18 | 0 | IN   | GPIO.24 | 24  |
- |  10 |SPI0.DI  | ALT0 | 0 | 19 || 20 |   |      | 0v      |     |
+ |  10 |SPI0.DI  | ALT0 | 0 | 19 || 20 |   |      | GND     |     |
  |   9 |SPI0.DO  | ALT0 | 0 | 21 || 22 | 0 | IN   | GPIO.25 | 25  |
  |  11 |SPI0.CLK | ALT0 | 0 | 23 || 24 | 1 | OUT  | SPI0.CE0| 8   |
  |     |     GND |      |   | 25 || 26 | 1 | OUT  | SPI0.CE1| 7   |
  |   0 |   SDA.0 |   IN | 1 | 27 || 28 | 1 | IN   | SCL.0   | 1   |
- |   5 | GPIO.5  |   IN | 1 | 29 || 30 |   |      | 0v      |     |
+ |   5 | GPIO.5  |   IN | 1 | 29 || 30 |   |      | GND     |     |
  |   6 | GPIO.6  |   IN | 1 | 31 || 32 | 0 | IN   | GPIO.12 | 12  |
- |  13 | GPIO.13 |   IN | 0 | 33 || 34 |   |      | 0v      |     |
+ |  13 | GPIO.13 |   IN | 0 | 33 || 34 |   |      | GND     |     |
  |  19 | GPIO.19 |  OUT | 1 | 35 || 36 | 1 | OUT  | GPIO.16 | 16  |
  |  26 | GPIO.26 |   IN | 0 | 37 || 38 | 0 | IN   | GPIO.20 | 20  |
  |     |     GND |      |   | 39 || 40 | 0 | IN   | GPIO.21 | 21  |
@@ -174,7 +173,8 @@ public class RPiGPIODemo {
  | BCM |   Name  | Mode | V | Physical | V | Mode | Name    | BCM |
  +-----+---------+------+---+----------+---+------+---------+-----+
 ```
-### NOTE: This project started as a fork of jWiringPi but soon realized that
+### NOTE: 
+This project started as a fork of jWiringPi but soon realized that
 PiGPIO is now the official way to interact with GPIO on a Raspberry Pi.  The
 author of Copper liked the format for the GIT project and decided to use it
 as the basis for the Copper project.
